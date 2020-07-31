@@ -22,7 +22,7 @@ public class ConnectionFactory
         entityManagerFactory = Persistence.createEntityManagerFactory("WebRrhhPU");
     }
     
-    public static ConnectionFactory obtenerInstancia()
+    public static ConnectionFactory getInstance()
     {
         return factory;
     }
