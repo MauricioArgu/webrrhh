@@ -7,8 +7,16 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        Hola, estamos probando poner PrimeFaces <br/>
-        <p:spinner />
+        
+        <h:form>
+            <center><h1>Esto es el login</h1></center>
+            <br/>
+            <h:panelGrid columns="2">
+            <h:outputText value="Nombre del rol"/>
+            <h:inputText value="#{rol}" required="true" requiredMessage="Por favor ingrese el rol"/>
+            <h:commandButton value="Iniciar Sesion"/>
+            </h:panelGrid>
+        </h:form>
     </h:body>
 </html>
 
