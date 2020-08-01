@@ -103,7 +103,9 @@ public class RhRol implements Serializable {
 
     @Override
     public String toString() {
-        return "com.rrhh.entity.RhRol[ rolId=" + rolId + " ]";
+        return "RhRol{" + "rolId=" + rolId + ", rolNombre=" + rolNombre + ", rhUsuarioCollection=" + rhUsuarioCollection + '}';
     }
+
+    
     
 }

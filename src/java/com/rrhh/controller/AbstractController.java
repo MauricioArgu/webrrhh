@@ -23,13 +23,10 @@ public abstract class AbstractController <T>
         EntityManager em = getEntityManager();
         try
         {
-            em.getTransaction().begin();
             em.persist(entity);
-            em.getTransaction().commit();
         }
         catch(Exception e)
         {
-            em.getTransaction().rollback();
             throw new Exception(e);
         }
         finally
@@ -46,13 +43,10 @@ public abstract class AbstractController <T>
         EntityManager em = getEntityManager();
         try
         {
-            em.getTransaction().begin();
             em.merge(entity);
-            em.getTransaction().commit();
         }
         catch(Exception e)
         {
-            em.getTransaction().rollback();
             throw new Exception(e);
         }
         finally
@@ -69,13 +63,10 @@ public abstract class AbstractController <T>
         EntityManager em = getEntityManager();
         try
         {
-            em.getTransaction().begin();
             em.remove(em.merge(entity));
-            em.getTransaction().commit();
         }
         catch(Exception e)
         {
-            em.getTransaction().rollback();
             throw new Exception(e);
         }
         finally
@@ -93,15 +84,12 @@ public abstract class AbstractController <T>
         
         try
         {
-            em.getTransaction().begin();
             em.find(entity.getClass(), id);
-            em.getTransaction().commit();
            
             return true;
         }
         catch(Exception e)
         {
-            em.getTransaction().rollback();
             throw new Exception(e);
         }
         finally

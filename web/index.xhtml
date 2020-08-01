@@ -2,20 +2,25 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
         
+        <h:messages id="messages"/>
+        
         <h:form>
             <center><h1>Esto es el login</h1></center>
             <br/>
             <h:panelGrid columns="2">
-            <h:outputText value="Nombre del rol"/>
-            <h:inputText value="#{rol}" required="true" requiredMessage="Por favor ingrese el rol"/>
-            <h:commandButton value="Iniciar Sesion"/>
+            <h:outputText value="Nombre del rol:"/>
+            <h:inputText value="#{rolManager.rol.rolNombre}" required="true" requiredMessage="Por favor ingrese el rol"/>
             </h:panelGrid>
+            <h:commandButton value="Iniciar Sesion"  actionListener="#{rolManager.createRol}">
+                <f:ajax execute="@form" render="messages"/>
+            </h:commandButton>
         </h:form>
     </h:body>
 </html>
