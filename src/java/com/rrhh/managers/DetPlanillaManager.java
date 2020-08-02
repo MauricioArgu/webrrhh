@@ -10,7 +10,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import jpa.controller.DetPlaController;
@@ -74,7 +76,50 @@ public class DetPlanillaManager implements Serializable
         this.detplaList = detplaList;
     }
     
+    public void createDetPla()
+    {
+        try 
+        {
+            detpla.setDetPlnId(0);
+            System.out.println("Detalle: " + detpla);
+            dpc.create(detpla);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Detalle Creado","Exitoso"));
+        } 
+        catch (Exception ex) 
+        {
+            Logger.getLogger(DetPlanillaManager.class.getName()).log(Level.SEVERE, null, ex);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Detalle No Creado " + ex.getMessage(),"Fail"));
+        }
+    }
     
+    public void updateDetPla()
+    {
+        try 
+        {
+            System.out.println("Detalle: " + detpla);
+            dpc.edit(detpla);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Detalle Editado","Exitoso"));
+        } 
+        catch (Exception ex) 
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Detalle No Editado: " + ex,"Fail"));
+            Logger.getLogger(DetPlanillaManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
+    public void deleteDetPla()
+    {
+        try 
+        {
+            System.out.println("Detalle: " + detpla);
+            dpc.delete(detpla);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Detalle Borrado","Exitoso"));
+        } 
+        catch (Exception ex) 
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Detalle No Borrado: " + ex,"Fail"));
+            Logger.getLogger(DetPlanillaManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
 }

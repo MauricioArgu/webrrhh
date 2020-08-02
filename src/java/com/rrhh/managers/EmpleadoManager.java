@@ -10,7 +10,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import jpa.controller.EmpController;
@@ -73,7 +75,50 @@ public class EmpleadoManager implements Serializable{
         this.empList = empList;
     }
     
+    public void createEmp()
+    {
+        try 
+        {
+            emp.setEmpId(0);
+            System.out.println("Empleado: " + emp);
+            ec.create(emp);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Empleado Creado","Exitoso"));
+        } 
+        catch (Exception ex) 
+        {
+            Logger.getLogger(EmpleadoManager.class.getName()).log(Level.SEVERE, null, ex);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Empelado No Creado " + ex.getMessage(),"Fail"));
+        }
+    }
     
+    public void updateEmp()
+    {
+
+        try 
+        {
+            System.out.println("Empleado: " + emp);
+            ec.edit(emp);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Empleado Editado","Exitoso"));
+        } 
+        catch (Exception ex) 
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Empleado No Editado: " + ex,"Fail"));
+            Logger.getLogger(EmpleadoManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
-    
+    public void deleteEmp()
+    {
+        try 
+        {
+            System.out.println("Empleado: " + emp);
+            ec.delete(emp);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Empleado Borrado","Exitoso"));
+        } 
+        catch (Exception ex) 
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Empleado No Borrado: " + ex,"Fail"));
+            Logger.getLogger(EmpleadoManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

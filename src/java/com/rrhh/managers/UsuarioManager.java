@@ -27,7 +27,7 @@ import jpa.entity.RhUsuario;
 @ManagedBean
 @ViewScoped
 public class UsuarioManager implements Serializable{
-    private RhUsuario usuario;
+    private RhUsuario usu;
     
     private List<RhUsuario> usuList;
     
@@ -41,11 +41,11 @@ public class UsuarioManager implements Serializable{
     {
         try 
         {
-            usuario = new RhUsuario();
+            usu = new RhUsuario();
             
             uc = new UsuController();
             
-            usuList = uc.findAll(usuario);
+            usuList = uc.findAll(usu);
         } 
         catch (Exception ex) 
         {
@@ -54,11 +54,11 @@ public class UsuarioManager implements Serializable{
     }
 
     public RhUsuario getUsuario() {
-        return usuario;
+        return usu;
     }
 
     public void setUsuario(RhUsuario usuario) {
-        this.usuario = usuario;
+        this.usu = usuario;
     }
 
 
@@ -83,15 +83,46 @@ public class UsuarioManager implements Serializable{
     {
         try 
         {
-            usuario.setUsId(0);
-            System.out.println("Usuario: " + usuario);
-            uc.create(usuario);
+            usu.setUsId(0);
+            System.out.println("Usuario: " + usu);
+            uc.create(usu);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Rol Creado","Exitoso"));
         } 
         catch (Exception ex) 
         {
             Logger.getLogger(UsuarioManager.class.getName()).log(Level.SEVERE, null, ex);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Rol No Creado " + ex.getMessage(),""));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Rol No Creado " + ex.getMessage(),"Fail"));
+        }
+    }
+    
+    public void updateUsu()
+    {
+
+        try 
+        {
+            System.out.println("Usuario: " + usu);
+            uc.edit(usu);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Usuario Editado","Exitoso"));
+        } 
+        catch (Exception ex) 
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Usuario No Editado: " + ex,"Fail"));
+            Logger.getLogger(UsuarioManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void deleteUsu()
+    {
+        try 
+        {
+            System.out.println("Usuario: " + usu);
+            uc.delete(usu);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Usuario Borrado","Exitoso"));
+        } 
+        catch (Exception ex) 
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Usuario No Borrado: " + ex,"Fail"));
+            Logger.getLogger(UsuarioManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

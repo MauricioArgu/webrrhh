@@ -10,7 +10,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import jpa.controller.PlaController;
@@ -71,7 +73,50 @@ public class PlanillaManager implements Serializable
         this.plaList = plaList;
     }
     
+    public void createPla()
+    {
+        try 
+        {
+            pla.setPlnId(0);
+            System.out.println("Planilla: " + pla);
+            pc.create(pla);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Planilla Creada","Exitoso"));
+        } 
+        catch (Exception ex) 
+        {
+            Logger.getLogger(PlanillaManager.class.getName()).log(Level.SEVERE, null, ex);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Planilla No Creada " + ex.getMessage(),"Fail"));
+        }
+    }
     
+    public void updatePla()
+    {
+
+        try 
+        {
+            System.out.println("Planilla: " + pla);
+            pc.edit(pla);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"PLanilla Editada","Exitoso"));
+        } 
+        catch (Exception ex) 
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Planilla No Editada: " + ex,"Fail"));
+            Logger.getLogger(PlanillaManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
-    
+    public void deletePla()
+    {
+        try 
+        {
+            System.out.println("Planilla: " + pla);
+            pc.delete(pla);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Planilla Borrada","Exitoso"));
+        } 
+        catch (Exception ex) 
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Planilla No Borrada: " + ex,"Fail"));
+            Logger.getLogger(PlanillaManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
