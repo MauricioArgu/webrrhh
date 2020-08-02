@@ -90,7 +90,7 @@ public class UsuarioManager implements Serializable{
         } 
         catch (Exception ex) 
         {
-            Logger.getLogger(RolManager.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UsuarioManager.class.getName()).log(Level.SEVERE, null, ex);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Rol No Creado " + ex.getMessage(),""));
         }
     }
