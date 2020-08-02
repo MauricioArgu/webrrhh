@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
@@ -11,16 +12,113 @@
         
         <h:messages id="messages"/>
         
-        <h:form>
-            <center><h1>Esto es el login</h1></center>
+        
+            <center><h1>Esto es el Index</h1></center>
             <br/>
+            <br/>
+            <p:dataTable var="rol" value="#{rolManager.rolList}">
+                <p:column headerText="Id Rol">
+                    <h:outputText value="#{rol.rolId}"/>
+                </p:column>
+                <p:column headerText="Nombre Rol">
+                    <h:outputText value="#{rol.rolNombre}"/>
+                </p:column>
+            </p:dataTable>
+            <br/>
+            <br/>
+            <p:dataTable var="usu" value="#{usuarioManager.usuarioList}">
+                <p:column headerText="Id Usuario">
+                    <h:outputText value="#{usu.usId}"/>
+                </p:column>
+                <p:column headerText="Nombre de Usuario">
+                    <h:outputText value="#{usu.usUsuario}"/>
+                </p:column>
+                <p:column headerText="Correo de Usuario">
+                    <h:outputText value="#{usu.usCorreo}"/>
+                </p:column>
+                <p:column headerText="Contraseña de Usuario">
+                    <h:outputText value="#{usu.usContra}"/>
+                </p:column>
+                <p:column headerText="Rol de Usuario">
+                    <h:outputText value="#{usu.rolId.rolNombre}"/>
+                </p:column>
+            </p:dataTable>
+            <br/>
+            <br/>
+            <p:dataTable var="dep" value="#{departamentoManager.depList}">
+                <p:column headerText="Id Departamento">
+                    <h:outputText value="#{dep.depId}"/>
+                </p:column>
+                <p:column headerText="Nombre Departamento">
+                    <h:outputText value="#{dep.depNombre}"/>
+                </p:column>
+            </p:dataTable>
+            <br/>
+            <br/>
+            <p:dataTable var="emp" value="#{empleadoManager.empList}">
+                <p:column headerText="Id Empleado">
+                    <h:outputText value="#{emp.empId}"/>
+                </p:column>
+                <p:column headerText="Codigo Empleado">
+                    <h:outputText value="#{emp.empCodigo}"/>
+                </p:column>
+                <p:column headerText="Nombres Empleado">
+                    <h:outputText value="#{emp.empNombres}"/>
+                </p:column>
+                <p:column headerText="Apellidos Empleado">
+                    <h:outputText value="#{emp.empApellidos}"/>
+                </p:column>
+                <p:column headerText="Correo Empleado">
+                    <h:outputText value="#{emp.empCorreo}"/>
+                </p:column>
+                <p:column headerText="DUI Empleado">
+                    <h:outputText value="#{emp.empDui}"/>
+                </p:column>
+                <p:column headerText="NIT Empleado">
+                    <h:outputText value="#{emp.empNit}"/>
+                </p:column>
+                <p:column headerText="Jefe Empleado">
+                    <h:outputText value="#{emp.empJefId.empNombres}"/>
+                </p:column>
+                <p:column headerText="Direccion Empleado">
+                    <h:outputText value="#{emp.empDireccion}"/>
+                </p:column>
+                <p:column headerText="Telefono Empleado">
+                    <h:outputText value="#{emp.empTelefono}"/>
+                </p:column>
+                <p:column headerText="Estado Empleado">
+                    <c:set var = "estado" value = "#{emp.empEstado}"/>
+                    <h:outputLabel value="Activo" rendered="#{estado == 0}"/>
+                    <h:outputLabel value="Inactivo" rendered="#{estado == 1}"/>
+                </p:column>
+                <p:column headerText="Departamento Empleado">
+                    <h:outputText value="#{emp.depId.depNombre}"/>
+                </p:column>
+                <p:column headerText="Salario Empleado">
+                    <h:outputText value="#{emp.empSueldo}"/>
+                </p:column>
+            </p:dataTable>
+            <h:form>
             <h:panelGrid columns="2">
+            <h:outputText value="Id del rol:"/>
+            <h:inputText value="#{(rolManager.rol.rolId)}" requiredMessage="Por favor ingrese el rol"/>
             <h:outputText value="Nombre del rol:"/>
-            <h:inputText value="#{rolManager.rol.rolNombre}" required="true" requiredMessage="Por favor ingrese el rol"/>
+            <h:inputText value="#{rolManager.rol.rolNombre}" requiredMessage="Por favor ingrese el rol"/>
             </h:panelGrid>
-            <h:commandButton value="Iniciar Sesion"  actionListener="#{rolManager.createRol}">
+            <h:panelGrid columns="1">
+                <h:commandButton value="Agregar Rol"  actionListener="#{rolManager.createRol()}">
                 <f:ajax execute="@form" render="messages"/>
-            </h:commandButton>
+                </h:commandButton>
+                <h:commandButton value="Mostrar Roles"  actionListener="#{rolManager.findRol()}">
+                    <f:ajax execute="@form" render="messages"/>
+                </h:commandButton>
+                <h:commandButton value="Editar Rol"  actionListener="#{rolManager.updateRol()}">
+                    <f:ajax execute="@form" render="messages"/>
+                </h:commandButton>
+                <h:commandButton value="Borrar Roles"  actionListener="#{rolManager.deleteRol()}">
+                    <f:ajax execute="@form" render="messages"/>
+                </h:commandButton>
+            </h:panelGrid>
         </h:form>
     </h:body>
 </html>
