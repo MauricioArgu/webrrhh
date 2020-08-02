@@ -18,17 +18,17 @@ import jpa.entity.RhEmpleado;
 
 /**
  *
- * @author Maury
+ * @author Mauricio Argumedo
  */
 @ManagedBean
 @ViewScoped
 public class EmpleadoManager implements Serializable{
     
-    RhEmpleado emp;
+    private RhEmpleado emp;
     
-    EmpController ec;
+    private EmpController ec;
     
-    List<RhEmpleado> empList;
+    private List<RhEmpleado> empList;
     /**
      * Creates a new instance of EmpleadoManager
      */

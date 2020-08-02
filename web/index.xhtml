@@ -98,6 +98,59 @@
                     <h:outputText value="#{emp.empSueldo}"/>
                 </p:column>
             </p:dataTable>
+            <br/>
+            <br/>
+            <p:dataTable var="pla" value="#{planillaManager.plaList}">
+                <p:column headerText="Id Planilla">
+                    <h:outputText value="#{pla.plnId}"/>
+                </p:column>
+                <p:column headerText="Fecha Planilla">
+                    <h:outputText value="#{pla.plnFecha}"/>
+                </p:column>
+                <p:column headerText="Estado Planilla">
+                    <c:set var = "estado" value = "#{pla.plnEstado}"/>
+                    <h:outputLabel value="Pendiente" rendered="#{estado == 0}"/>
+                    <h:outputLabel value="Pagado" rendered="#{estado == 1}"/>
+                </p:column>
+                <p:column headerText="Total Planilla">
+                    <h:outputText value="#{pla.plnTotal}"/>
+                </p:column>
+            </p:dataTable>
+            <p:dataTable var="detpla" value="#{detPlanillaManager.detplaList}">
+                <p:column headerText="Id Detalle Planilla">
+                    <h:outputText value="#{detpla.detPlnId}"/>
+                </p:column>
+                <p:column headerText="AFP">
+                    <h:outputText value="#{detpla.detPlnAfp}"/>
+                </p:column>
+                <p:column headerText="Isss">
+                    <h:outputText value="#{detpla.detPlnIsss}"/>
+                </p:column>
+                <p:column headerText="Renta">
+                    <h:outputText value="#{detpla.detPlnRenta}"/>
+                </p:column>
+                <p:column headerText="Total Descuentos">
+                    <h:outputText value="#{detpla.detPlnTotalDescuentos}"/>
+                </p:column>
+                <p:column headerText="H extra diurnas">
+                    <h:outputText value="#{detpla.detPlnCantidadHorasDiurnas}"/>
+                </p:column>
+                <p:column headerText="H extra nocturnas">
+                    <h:outputText value="#{detpla.detPlnCantidadHorasNocturnas}"/>
+                </p:column>
+                <p:column headerText="Bono horas extra">
+                    <h:outputText value="#{detpla.detPlnBonoHorasExtra}"/>
+                </p:column>
+                <p:column headerText="Planilla">
+                    <h:outputText value="#{detpla.plnId.plnFecha}"/>
+                </p:column>
+                <p:column headerText="Empleado">
+                    <h:outputText value="#{detpla.empId.empNombres}"/>
+                </p:column>
+                <p:column headerText="Total">
+                    <h:outputText value="#{detpla.detPlnTotal}"/>
+                </p:column>
+            </p:dataTable>
             <h:form>
             <h:panelGrid columns="2">
             <h:outputText value="Id del rol:"/>
