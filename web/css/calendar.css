@@ -1,0 +1,72 @@
+.fc-button
+{
+    background-color: #fd7e14;
+    color: white;
+    padding: 3px;
+}
+
+.fc-next-button,.fc-prev-button
+{
+    width: 35px;
+}
+.fc-center>h2
+{
+    font-size: 22px;
+    font-weight: bold;
+    font-family: sans-serif;
+}
+.fc-time-grid-container::-webkit-scrollbar-thumb {
+    background: #7d9dbc;
+    border-radius: 4px;
+}
+
+.fc-time-grid-container::-webkit-scrollbar {
+    width: 8px;     /* Tamaño del scroll en vertical */
+    height: 8px;    /* Tamaño del scroll en horizontal */
+}
+
+.fc-time-grid-container::-webkit-scrollbar-thumb:hover {
+    background: #92a6bc;
+    box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.fc-time-grid-container::-webkit-scrollbar-thumb:active {
+    background-color: #6d889e;
+}
+
+.fc-time-grid-container::-webkit-scrollbar-track {
+    background: #e1e1e1;
+    border-radius: 4px;
+}
+
+
+.fc-time-grid-container::-webkit-scrollbar-track:hover,
+.fc-time-grid-container::-webkit-scrollbar-track:active {
+    background: #d4d4d4;
+}
+.fc-view > table
+{
+    box-shadow: 1px 4px 18px 1px rgba(0, 0, 0, 0.3);
+    border:1px solid black;
+}
+.fc-day-header
+{
+    background-color: #002A67;
+    color: white;
+}
+.fc-body
+{
+    background-color: #f0f4f7;
+    border: 1px black solid;
+}
+
+.fc-state-highlight
+{
+    background-color: #08222a;
+    color: #002A67;
+}
+
+#manage{
+    transition: all 1s;
+    box-shadow: 6px 6px 25px 2px rgba(0, 0, 0, 0.6);
+}
