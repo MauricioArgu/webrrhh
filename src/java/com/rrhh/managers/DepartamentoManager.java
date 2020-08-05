@@ -18,6 +18,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import jpa.controller.DepController;
 import jpa.entity.RhDepartamento;
+import org.primefaces.PrimeFaces;
 
 /**
  *
@@ -85,12 +86,13 @@ public class DepartamentoManager implements Serializable{
             dep.setDepId(0);
             System.out.println("Departamento: " + dep);
             dc.create(dep);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Departamento Creado","Exitoso"));
+            simpleAlert("success", "Creado", "El registro se ha creado satisfactoriamente.");
+            updateColumns();
         } 
         catch (Exception ex) 
         {
             Logger.getLogger(DepartamentoManager.class.getName()).log(Level.SEVERE, null, ex);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Departamento No Creado " + ex.getMessage(),"Fail"));
+            simpleAlert("info", "No creado", ex.getMessage());
         }
     }
     
@@ -101,11 +103,12 @@ public class DepartamentoManager implements Serializable{
         {
             System.out.println("Departamento: " + dep);
             dc.edit(dep);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Departamento Editado","Exitoso"));
+            simpleAlert("success", "Actualizado", "El registro se ha actualizado satisfactoriamente.");
+            updateColumns();
         } 
         catch (Exception ex) 
         {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Departamento No Editado: " + ex,"Fail"));
+            simpleAlert("info", "No actualizado", ex.getMessage());
             Logger.getLogger(DepartamentoManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -116,12 +119,26 @@ public class DepartamentoManager implements Serializable{
         {
             System.out.println("Departamento: " + dep);
             dc.delete(dep);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Rol Borrado","Exitoso"));
+            simpleAlert("success", "Eliminado", "El registro se ha eliminado satisfactoriamente.");
+            updateColumns();
         } 
         catch (Exception ex) 
         {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Rol No Borrado: " + ex,"Fail"));
+            simpleAlert("info", "No eliminado", ex.getMessage());
             Logger.getLogger(DepartamentoManager.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public void updateColumns() {
+        //reset table state
+        loadData();
+        PrimeFaces.current().ajax().update("formTable:data");
+    }
+    
+    public void simpleAlert(String type, String title, String text){
+        StringBuilder alert = new StringBuilder();
+        alert.append("hideModal();simpleAlert('").append(type).append("','");
+        alert.append(title).append("','").append(text).append("');");
+        PrimeFaces.current().executeScript(alert.toString());
     }
 }
