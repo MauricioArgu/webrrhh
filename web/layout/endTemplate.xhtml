@@ -19,12 +19,91 @@
 <div class="app-drawer-overlay d-none animated fadeIn"></div><script type="text/javascript" src="../assets/scripts/main.87c0748b313a1dda75f5.js"></script>
 <script src="../js/jquery.js"></script>
 <script src="../js/jquery.fancybox.js"></script>
+<!--script src="../js/sweetalert2.all.min.js"></script-->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<!--===============================================================================================-->
+<script src="../vendor/tilt/tilt.jquery.min.js"></script>
 <script>
     window.onload = function(){
         var contenedor = document.getElementById('contenedor-carga');
         contenedor.style.visibility = "hidden";
         contenedor.style.opacity = '0';
     };
+</script>
+<script>
+    let simpleAlert=(type,title,text)=>{
+        Swal.fire({
+            icon:type,
+            title:title,
+            text:text
+        });
+    }
+    
+    $('.js-tilt').tilt({
+        scale: 1.15
+    })
+    
+    $('.fancybox-close-small').css('color','white');
+    
+    let showModal=()=>{
+        console.log('presionado');
+        $('#form').click();
+    }
+                
+    let hideModal=()=>{
+        $('.fancybox-close-small').click();
+        console.log("cerrado");
+    }
+    
+    $('.js-tilt').click(function(){
+        imgAlert();
+    });
+    
+    let toastAlert=()=>{
+        const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        onOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+        })
+
+        Toast.fire({
+            icon: 'success',
+            title: 'Signed in successfully'
+        })
+    }
+    
+    let imgAlert=()=>{
+        $('.js-tilt').hide(100);
+        Swal.fire({
+            title: '<h2 style="color:white;">RRHH Systems.</h2>',
+            html:'<p style="color:white">Recuerda programar bien todas tus aplicaciones!</p>',
+            width: 600,
+            imageUrl: '../images/progra.gif',
+            imageWidth: 410,
+            imageHeight: 290,
+            confirmButtonColor:'blue',
+            imageAlt: 'Custom image',
+            padding: '3em',
+            background: ' url(../images/bg.jpg)',
+            backdrop: `
+              rgba(0,0,0,0.9)
+              url("../../images/nyan-cat.gif")
+              left top
+              no-repeat
+            `
+        }).then((result) => {
+            $('.js-tilt').show(300);
+            $('.js-tilt').tilt({
+                scale: 1.15
+            })
+        });
+    }
 </script>
 </ui:composition>
 

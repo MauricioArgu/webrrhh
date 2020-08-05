@@ -11,6 +11,17 @@
     </div>
 </div>
 <div class="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
+    <img src="../images/bitlab.png" style="
+                            width: 100px; 
+                            height: 100px;
+                            border-radius: 10px;
+                            position: fixed; 
+                            bottom: 20px;
+                            left: 20px;
+                            box-shadow: rgba(0,0,0,0.3) 1px 5px 4px 0px;
+                            z-index: 1000" 
+    class="js-tilt"  data-tilt="true"/> 
+    
     <div class="app-header header-shadow" style="background: url(../images/header-background.jpg) no-repeat fixed;background-size: cover;
         background: -webkit-linear-gradient(-135deg, #47A0FF, #00148f);
         background: -o-linear-gradient(-135deg, #47A0FF, #00148f);
@@ -133,7 +144,7 @@
             </div>
             <div class="app-header__mobile-menu">
                 <div>
-                    <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
+                    <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav is-active">
                             <span class="hamburger-box">
                                 <span class="hamburger-inner"></span>
                             </span>
@@ -165,21 +176,21 @@
                             </a>
                             <ul>
                                 <li>
-                                    <a href="apps-appointment.php">
+                                    <a href="rol.rrhh">
                                         <i class="metismenu-icon"></i>
-                                        Appointment
+                                        Roles
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="apps-schedule.php">
+                                    <a href="usuario.rrhh">
                                         <i class="metismenu-icon"></i>
-                                        Schedule
+                                        Usuarios
                                     </a>
                                 </li>
 								
                             </ul>
                         </li>
-                        <li>
+                        <!--li>
                             <a href="#">
                                 <i class="metismenu-icon pe-7s-plugin"></i>
                                 Applications
@@ -205,7 +216,8 @@
                                 <i class="metismenu-icon pe-7s-user"></i>
                                 Profile
                             </a>
-                        </li>
+                        </li-->
+                        
                     </ul>
                 </div>
             </div>
@@ -220,6 +232,10 @@
                 <ui:insert name="contenido">
                     hola
                 </ui:insert>
+                
+                <button class="login100-form-btn" data-fancybox="true" data-animation-duration="700" data-src="#animatedModal" href="javascript:;" id="form" style="display:none;">
+                    Más información  <i class="fas fa-user-circle"></i>
+                </button>
             </div>
         </div>
     </div>     

@@ -17,6 +17,7 @@ import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import jpa.controller.EmpController;
 import jpa.entity.RhEmpleado;
+import org.primefaces.PrimeFaces;
 
 /**
  *
@@ -82,12 +83,13 @@ public class EmpleadoManager implements Serializable{
             emp.setEmpId(0);
             System.out.println("Empleado: " + emp);
             ec.create(emp);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Empleado Creado","Exitoso"));
+            simpleAlert("success", "Creado", "El registro se ha creado satisfactoriamente.");
+            updateColumns();
         } 
         catch (Exception ex) 
         {
             Logger.getLogger(EmpleadoManager.class.getName()).log(Level.SEVERE, null, ex);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Empelado No Creado " + ex.getMessage(),"Fail"));
+            simpleAlert("info", "No creado", ex.getMessage());
         }
     }
     
@@ -98,12 +100,13 @@ public class EmpleadoManager implements Serializable{
         {
             System.out.println("Empleado: " + emp);
             ec.edit(emp);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Empleado Editado","Exitoso"));
+            simpleAlert("success", "Actualizado", "El registro se ha actualizado satisfactoriamente.");
+            updateColumns();
         } 
         catch (Exception ex) 
         {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Empleado No Editado: " + ex,"Fail"));
-            Logger.getLogger(EmpleadoManager.class.getName()).log(Level.SEVERE, null, ex);
+            simpleAlert("info", "No actualizado", ex.getMessage());
         }
     }
     
@@ -113,12 +116,27 @@ public class EmpleadoManager implements Serializable{
         {
             System.out.println("Empleado: " + emp);
             ec.delete(emp);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Empleado Borrado","Exitoso"));
+            simpleAlert("success", "Eliminado", "El registro se ha eliminado satisfactoriamente.");
+            updateColumns();
         } 
         catch (Exception ex) 
         {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Empleado No Borrado: " + ex,"Fail"));
+            simpleAlert("info", "No eliminado", ex.getMessage());
             Logger.getLogger(EmpleadoManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public void updateColumns() {
+        //reset table state
+        loadData();
+        PrimeFaces.current().ajax().update("formTable:data");
+    }
+    
+    public void simpleAlert(String type, String title, String text){
+        StringBuilder alert = new StringBuilder();
+        alert.append("hideModal();simpleAlert('").append(type).append("','");
+        alert.append(title).append("','").append(text).append("');");
+        PrimeFaces.current().executeScript(alert.toString());
+    }
+    
 }

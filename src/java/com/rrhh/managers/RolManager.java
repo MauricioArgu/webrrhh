@@ -13,11 +13,13 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import jpa.controller.RolController;
 import jpa.entity.RhRol;
+import org.primefaces.PrimeFaces;
 
 /**
  *
@@ -75,12 +77,13 @@ public class RolManager implements Serializable {
             rol.setRolId(0);
             System.out.println("Rol: " + rol);
             rc.create(rol);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Rol Creado","Exitoso"));
+            simpleAlert("success", "Creado", "El registro se ha creado satisfactoriamente.");
+            updateColumns();
         } 
         catch (Exception ex) 
         {
             Logger.getLogger(RolManager.class.getName()).log(Level.SEVERE, null, ex);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Rol No Creado " + ex.getMessage(),""));
+            simpleAlert("info", "No creado", ex.getMessage());
         }
     }
 
@@ -91,11 +94,12 @@ public class RolManager implements Serializable {
         {
             System.out.println("Rol: " + rol);
             rc.edit(rol);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Rol Editado","Exitoso"));
+            simpleAlert("success", "Actualizado", "El registro se ha actualizado satisfactoriamente.");
+            updateColumns();
         } 
         catch (Exception ex) 
         {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Rol No Editado: " + ex,"Fail"));
+            simpleAlert("info", "No actualizado", ex.getMessage());
             Logger.getLogger(RolManager.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -107,11 +111,12 @@ public class RolManager implements Serializable {
         {
             System.out.println("Rol: " + rol);
             rc.delete(rol);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Rol Borrado","Exitoso"));
+            simpleAlert("success", "Eliminado", "El registro se ha eliminado satisfactoriamente.");
+            updateColumns();
         } 
         catch (Exception ex) 
         {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Rol No Borrado: " + ex,"Fail"));
+            simpleAlert("info", "No eliminado", ex.getMessage());
             Logger.getLogger(RolManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -142,5 +147,18 @@ public class RolManager implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error  : " + ex.getMessage(),""));
             Logger.getLogger(RolManager.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public void updateColumns() {
+        //reset table state
+        loadData();
+        PrimeFaces.current().ajax().update("formTable:data");
+    }
+    
+    public void simpleAlert(String type, String title, String text){
+        StringBuilder alert = new StringBuilder();
+        alert.append("hideModal();simpleAlert('").append(type).append("','");
+        alert.append(title).append("','").append(text).append("');");
+        PrimeFaces.current().executeScript(alert.toString());
     }
 }

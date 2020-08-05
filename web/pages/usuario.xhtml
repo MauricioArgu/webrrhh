@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <body>
+
+        <ui:composition template="./../principal.xhtml">
+            <ui:define name="titulo">
+                App | Usuario
+            </ui:define>
+
+            <ui:define name="contenido">
+                <h:form>
+                    <p:dataTable var="usuario" value="#{usuarioManager.usuarioList}" rows="10"
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                         rowsPerPageTemplate="5,10,15">
+                    
+                    <p:column headerText="Id Usuario">
+                        <h:outputText value="#{usuario.usId}"/>
+                    </p:column>
+                    <p:column headerText="Nombre de Usuario">
+                        <h:outputText value="#{usuario.usUsuario}"/>
+                    </p:column>
+                    <p:column headerText="Correo de Usuario">
+                        <h:outputText value="#{usuario.usCorreo}"/>
+                    </p:column>
+                    <p:column headerText="Contraseña de Usuario">
+                        <h:outputText value="#{usuario.usContra}"/>
+                    </p:column>
+                    <p:column headerText="Rol de Usuario">
+                        <h:outputText value="#{usuario.rolId.rolNombre}"/>
+                    </p:column>
+                    <p:column headerText="Acciones">
+                        <p:commandButton value="Detalle" icon="pi pi-pencil" title="Ver Detalle" oncomplete="showModal();" update=":formDetail">
+                            <f:setPropertyActionListener value="#{usuario}" target="#{usuarioManager.usuario}"/>
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
+                </h:form>
+                
+                <div style="display: none;background: url(../images/header-background.jpg) no-repeat fixed;background-size: cover;" id="animatedModal" class="animated-modal" >
+                    <h4 class='card-title text-center' style="color:white;">Detalle del Usuario&nbsp;<i class="fas fa-user-circle"></i></h4>
+                    <br/>
+                    <div>
+                        <center>
+                            <h:form id="formDetail">
+                                <h:outputText value="ID"  style="color:white;display: none;"/>
+                                
+                                <p:inputText value="#{usuarioManager.usuario.usId}" readonly="true" style="text-align: center;display: none;" size="40"></p:inputText>
+                                
+                                <h:outputText value="Nombre" style="color:white;"/>
+                                <br/>
+                                <p:inputText value="#{usuarioManager.usuario.usUsuario}" style="text-align: center;" size="40"></p:inputText>
+                                <br/><br/>
+                                <h:outputText value="Correo" style="color:white;"/>
+                                <br/>
+                                <p:inputText value="#{usuarioManager.usuario.usCorreo}" style="text-align: center;" size="40"></p:inputText>
+                                <br/><br/>
+                                <h:outputText value="Contraseña" style="color:white;"/>
+                                <br/>
+                                <p:inputText value="#{usuarioManager.usuario.usContra}" style="text-align: center;" size="40"></p:inputText>
+                                <br/><br/>
+
+                                <p:outputLabel for="@next" value="Rol de Usuario" style="color:white;"/>
+                                <br/>
+                                <h:selectOneMenu value="#{usuarioManager.usuario.rolId.rolId}" label="#{usuarioManager.usuario.rolId.rolNombre}"  style="width:312px;text-align: center;
+                                                 padding: 5px;border-radius: 3px;border-color: #ededed;">
+                                    <c:forEach var="rolL" items="#{rolManager.rolList}">
+                                        <f:selectItem itemValue="#{rolL.rolId}" itemLabel="#{rolL.rolNombre}"  />
+                                    </c:forEach>
+                                </h:selectOneMenu>
+                                <br/><br/>
+                                
+                                
+                                <p:commandButton value="Guardar" class="text-center" id="editButton" style="background:#00c1c8;border:none;"></p:commandButton>
+                                &nbsp;
+                                <p:commandButton value="Eliminar" class="text-center" id="deleteButton" style="background:#dc3545;border:none;"></p:commandButton>
+                                <h:commandButton value="Eliminar"  actionListener="#{rolManager.deleteRol()}" class="btn btn-danger">
+                                    <f:ajax execute="@form"/>
+                                </h:commandButton>
+                            </h:form>
+                        </center>
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

@@ -1,9 +1,14 @@
 $(document).ready(function(){
     var noLogin = false;
     if(!noLogin){
+        $('.fancybox-close-small').css('color','black');
         $("#info").click();
+        $('.fancybox-close-small').css('color','black');
         $("#logo").click(function(){
+            
+            $('.fancybox-close-small').css('color','black');
             $('#info').click();
+            $('.fancybox-close-small').css('color','black');
         });
     }else {
         const Toast = Swal.mixin({
