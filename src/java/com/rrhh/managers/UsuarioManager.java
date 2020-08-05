@@ -5,6 +5,7 @@
  */
 package com.rrhh.managers;
 
+import com.rrhh.utility.Encryption;
 import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
@@ -33,6 +34,8 @@ public class UsuarioManager implements Serializable{
     private List<RhUsuario> usuList;
     
     private UsuController uc;
+    
+    private Encryption encrypter;
 
     /**
      * Creates a new instance of usuarioManager
@@ -47,6 +50,8 @@ public class UsuarioManager implements Serializable{
             uc = new UsuController();
             
             usuList = uc.findAll(usu);
+            
+            encrypter = new Encryption();
         } 
         catch (Exception ex) 
         {
@@ -85,6 +90,8 @@ public class UsuarioManager implements Serializable{
         try 
         {
             usu.setUsId(0);
+            String newPass = encrypter.encrypt(usu.getUsContra());
+            usu.setUsContra(newPass);
             System.out.println("Usuario: " + usu);
             uc.create(usu);
             simpleAlert("success", "Creado", "El registro se ha creado satisfactoriamente.");
@@ -102,6 +109,8 @@ public class UsuarioManager implements Serializable{
 
         try 
         {
+            String newPass = encrypter.encrypt(usu.getUsContra());
+            usu.setUsContra(newPass);
             System.out.println("Usuario: " + usu);
             uc.edit(usu);
             simpleAlert("success", "Actualizado", "El registro se ha actualizado satisfactoriamente.");
