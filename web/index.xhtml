@@ -13,7 +13,7 @@
         <h:messages id="messages"/>
         
         
-            <center><h1>Esto es el Index</h1></center>
+            <center><h1>Esto es el Index donde pruebo el pull con merge</h1></center>
             <br/>
             <br/>
             <p:dataTable var="rol" value="#{rolManager.rolList}">
@@ -168,9 +168,9 @@
                 <h:commandButton value="Editar Rol"  actionListener="#{rolManager.updateRol()}">
                     <f:ajax execute="@form" render="messages"/>
                 </h:commandButton>
-                <h:commandButton value="Borrar Roles"  actionListener="#{rolManager.deleteRol()}">
+                <p:commandButton value="Borrar Roles"  actionListener="#{rolManager.deleteRol()}">
                     <f:ajax execute="@form" render="messages"/>
-                </h:commandButton>
+                </p:commandButton>
             </h:panelGrid>
         </h:form>
     </h:body>
