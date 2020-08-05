@@ -80,7 +80,9 @@
                                 <br/><br/>
                                 
                                 
-                                <p:commandButton value="Guardar" class="text-center" id="editButton" style="background:#00c1c8;border:none;"></p:commandButton>
+                                <p:commandButton value="Guardar" class="text-center" id="editButton" style="background:#00c1c8;border:none;">
+                                    <f:ajax execute="@form"/>
+                                </p:commandButton>
                                 &nbsp;
                                 <p:commandButton value="Eliminar" class="text-center" id="deleteButton" style="background:#dc3545;border:none;"></p:commandButton>
                                 <h:commandButton value="Eliminar"  actionListener="#{rolManager.deleteRol()}" class="btn btn-danger">
