@@ -14,9 +14,10 @@
             </ui:define>
 
             <ui:define name="acciones">
-                <p:commandButton value="Nuevo" style="background:#00c1c8;border:none;" onclick="nuevo();"
-                                 actionListener="#{rolManager.reset()}">
+                <h:form>
+                    <p:commandButton value="Nuevo" style="background:#00c1c8;border:none;" onclick="showModal();" actionListener="#{rolManager.reset()}" update=":formDetail">
                 </p:commandButton>
+                </h:form>
             </ui:define>
             
             <ui:define name="contenido">
@@ -33,6 +34,7 @@
                         <p:column headerText="Acciones">
                             <p:commandButton value="Detalle" icon="pi pi-pencil" title="Ver Detalle" oncomplete="showModal();prepareToActions();" update=":formDetail">
                                 <f:setPropertyActionListener value="#{rol}" target="#{rolManager.rol}"/>
+                                <f:setPropertyActionListener value="false" target="#{rolManager.isNew}"/>
                             </p:commandButton>
                         </p:column>
 
@@ -52,14 +54,14 @@
                                 <br/>
                                 <p:inputText value="#{rolManager.rol.rolNombre}" style="text-align: center;"/>
                                 <br/><br/>
-                                <p:commandButton value="Guardar" class="createButton" style="background:#5cb85c;border:none;" actionListener="#{rolManager.createRol()}">
+                                <p:commandButton value="Guardar" style="background:#5cb85c;border:none;" actionListener="#{rolManager.createRol()}" rendered="#{rolManager.isNew}">
                                 <f:ajax execute="@form"/>
                             </p:commandButton>
-                                <p:commandButton value="Guardar" class="editButton" style="background:#00c1c8;border:none;" actionListener="#{rolManager.updateRol()}">
+                                <p:commandButton value="Guardar" style="background:#00c1c8;border:none;" actionListener="#{rolManager.updateRol()}" rendered="#{!rolManager.isNew}">
                                 <f:ajax execute="@form"/>
                             </p:commandButton>
                             &nbsp;
-                            <p:commandButton value="Eliminar" class="deleteButton" style="background:#e15073;border:none;" actionListener="#{rolManager.deleteRol()}">
+                            <p:commandButton value="Eliminar" style="background:#e15073;border:none;" actionListener="#{rolManager.deleteRol()}" rendered="#{!rolManager.isNew}">
                                 <f:ajax execute="@form"/>
                             </p:commandButton>
                             &nbsp;

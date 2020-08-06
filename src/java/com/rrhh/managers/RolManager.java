@@ -32,6 +32,7 @@ public class RolManager implements Serializable {
     private RhRol rol;
     private List<RhRol> rolList;
     private RolController rc;
+    private boolean isNew;
     /**
      * Creates a new instance of rolManager
      */
@@ -67,7 +68,13 @@ public class RolManager implements Serializable {
         this.rolList = rolList;
     }
 
+    public boolean isIsNew() {
+        return isNew;
+    }
 
+    public void setIsNew(boolean isNew) {
+        this.isNew = isNew;
+    }
 
 
     public void createRol()
@@ -163,6 +170,8 @@ public class RolManager implements Serializable {
     }
     
     public void reset() {
-        PrimeFaces.current().resetInputs("formDetail");
+        System.out.println("Reseteando valores de rol");
+        rol = new RhRol();
+        isNew = true;
     }
 }
