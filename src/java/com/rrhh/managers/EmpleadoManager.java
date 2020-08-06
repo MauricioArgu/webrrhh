@@ -125,6 +125,21 @@ public class EmpleadoManager implements Serializable{
         }
     }
     
+    public void getActive()
+    {
+        try 
+        {
+            emp = new RhEmpleado();
+            ec = new EmpController();
+            
+            empList = ec.findActive(emp);
+        } 
+        catch (Exception ex) 
+        {
+            Logger.getLogger(EmpleadoManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public void updateColumns() {
         //reset table state
         loadData();
