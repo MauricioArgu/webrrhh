@@ -39,6 +39,8 @@ public class UsuarioManager implements Serializable{
     
     private RhRol rol;
 
+    private boolean isNew;
+    
     /**
      * Creates a new instance of usuarioManager
      */
@@ -96,6 +98,15 @@ public class UsuarioManager implements Serializable{
     public void setRol(RhRol rol) {
         this.rol = rol;
     }
+
+    public boolean isIsNew() {
+        return isNew;
+    }
+
+    public void setIsNew(boolean isNew) {
+        this.isNew = isNew;
+    }
+    
     
     public void createUsu()
     {
@@ -122,6 +133,7 @@ public class UsuarioManager implements Serializable{
 
         try 
         {
+            
             String newPass = encrypter.encrypt(usu.getUsContra());
             usu.setUsContra(newPass);
             System.out.println("Usuario: " + usu);
@@ -141,11 +153,16 @@ public class UsuarioManager implements Serializable{
     {
         try 
         {
-            usu.setRolId(rol);
-            System.out.println("Usuario: " + usu);
-            uc.delete(usu);
-            simpleAlert("success", "Eliminado", "El registro se ha eliminado satisfactoriamente.");
-            updateColumns();
+            if(rol.getRolId()!=1){
+                usu.setRolId(rol);
+                System.out.println("Usuario: " + usu);
+                uc.delete(usu);
+                simpleAlert("success", "Eliminado", "El registro se ha eliminado satisfactoriamente.");
+                updateColumns();
+            }else{
+                simpleAlert("error", "Error Administrativo", "El usuario administrador no puede eliminarse.");
+            }
+            
         } 
         catch (Exception ex) 
         {
@@ -168,6 +185,8 @@ public class UsuarioManager implements Serializable{
     }
     
     public void reset() {
-        PrimeFaces.current().resetInputs("formDetail");
+        System.out.println("--------------------------- Form reset");
+        usu = new RhUsuario();
+        isNew = true;
     }
 }

@@ -15,21 +15,22 @@
             </ui:define>
 
             <ui:define name="acciones">
-                <p:commandButton value="Nuevo" style="background:#00c1c8;border:none;" onclick="nuevo();">
-                </p:commandButton>
+                <h:form>
+                    <p:commandButton value="Nuevo" style="background:#00c1c8;border:none;" actionListener="#{usuarioManager.reset()}" onclick="showModal();" update=":formDetail"/>
+                </h:form>
             </ui:define>
             
             <ui:define name="contenido">
-                <h:form>
-                    <p:dataTable var="usuario" value="#{usuarioManager.usuarioList}" rows="10"
+                <h:form id="formTable">
+                    <p:dataTable var="usuario" value="#{usuarioManager.usuarioList}" rows="10" id="data"
                          paginator="true"
-                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
                          currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
                          rowsPerPageTemplate="5,10,15">
                     
-                    <p:column headerText="Id Usuario">
+                    <!--p:column headerText="Id Usuario">
                         <h:outputText value="#{usuario.usId}"/>
-                    </p:column>
+                    </p:column-->
                     <p:column headerText="Nombre de Usuario">
                         <h:outputText value="#{usuario.usUsuario}"/>
                     </p:column>
@@ -46,6 +47,7 @@
                         <p:commandButton value="Detalle" icon="pi pi-pencil" title="Ver Detalle" oncomplete="showModal();prepareToActions();" update=":formDetail">
                             <f:setPropertyActionListener value="#{usuario}" target="#{usuarioManager.usuario}"/>
                             <f:setPropertyActionListener value="#{usuario.rolId}" target="#{usuarioManager.rol}"/>
+                            <f:setPropertyActionListener value="false" target="#{usuarioManager.isNew}"/>
                         </p:commandButton>
                     </p:column>
 
@@ -83,14 +85,14 @@
                                     </c:forEach>
                                 </h:selectOneMenu>
                                 <br/><br/>
-                                <p:commandButton value="Guardar" class="createButton" style="background:#5cb85c;border:none;" actionListener="#{usuarioManager.createUsu()}">
+                                <p:commandButton value="Guardar" class="createButton" style="background:#5cb85c;border:none;" actionListener="#{usuarioManager.createUsu()}" rendered="#{usuarioManager.isNew}">
                                     <f:ajax execute="@form"/>
                                 </p:commandButton>
-                                <p:commandButton value="Guardar" class="editButton" style="background:#00c1c8;border:none;" actionListener="#{usuarioManager.updateUsu()}">
+                                <p:commandButton value="Guardar" class="editButton" style="background:#00c1c8;border:none;" actionListener="#{usuarioManager.updateUsu()}" rendered="#{!usuarioManager.isNew}">
                                     <f:ajax execute="@form"/>
                                 </p:commandButton>
                                 &nbsp;
-                                <p:commandButton value="Eliminar" class="deleteButton" style="background:#dc3545;border:none;" actionListener="#{usuarioManager.deleteUsu()}"></p:commandButton>
+                                <p:commandButton value="Eliminar" class="deleteButton" style="background:#dc3545;border:none;" actionListener="#{usuarioManager.deleteUsu()}" rendered="#{!usuarioManager.isNew}"/>
                             </h:form>
                         </center>
                     </div>
