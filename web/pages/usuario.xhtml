@@ -60,7 +60,7 @@
                             <h:form id="formDetail" class="formDetail">
                                 <h:outputText value="ID"  style="color:white;display: none;"/>
                                 
-                                <p:inputText value="#{usuarioManager.usuario.usId}" readonly="true" style="text-align: center;display: none;" size="40"></p:inputText>
+                                <p:inputText value="#{usuarioManager.usuario.usId}" style="text-align: center;display: none;" size="40"></p:inputText>
                                 
                                 <h:outputText value="Nombre" style="color:white;"/>
                                 <br/>
@@ -83,9 +83,6 @@
                                     </c:forEach>
                                 </h:selectOneMenu>
                                 <br/><br/>
-                                
-                                
-                                
                                 <p:commandButton value="Guardar" class="createButton" style="background:#5cb85c;border:none;" actionListener="#{usuarioManager.createUsu()}">
                                     <f:ajax execute="@form"/>
                                 </p:commandButton>

@@ -173,6 +173,61 @@
                 </p:commandButton>
             </h:panelGrid>
         </h:form>
+            
+            
+            
+        <h:form>
+                    <p:dataTable var="emp" value="#{empleadoManager.empList}" rows="10"
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                         rowsPerPageTemplate="5,10,15">
+                    <p:column headerText="Código">
+                        <h:outputText value="#{emp.empCodigo}"/>
+                    </p:column>
+                    <p:column headerText="Nombres">
+                        <h:outputText value="#{emp.empNombres}"/>
+                    </p:column>
+                    <p:column headerText="Apellidos">
+                        <h:outputText value="#{emp.empApellidos}"/>
+                    </p:column>
+                    <p:column headerText="Dirección">
+                        <h:outputText value="#{emp.empDireccion}"/>
+                    </p:column>
+                    <p:column headerText="DUI">
+                        <h:outputText value="#{emp.empDui}"/>
+                    </p:column>
+                    <p:column headerText="NIT">
+                        <h:outputText value="#{emp.empNit}"/>
+                    </p:column>
+                    <p:column headerText="Teléfono">
+                        <h:outputText value="#{emp.empTelefono}"/>
+                    </p:column>
+                    <p:column headerText="Sueldo">
+                        <h:outputText value="#{emp.empSueldo}"/>
+                    </p:column>
+                    <p:column headerText="Departamento">
+                        <h:outputText value="#{emp.depId.depNombre}"/>
+                    </p:column>
+                    <p:column headerText="Jefe">
+                        <h:outputText value="#{emp.empJefId.empNombres}"/>
+                    </p:column>
+                    <p:column headerText="Estado">
+                        <c:set var = "estado" value = "#{emp.empEstado}"/>
+                        <h:outputLabel value="Activo" rendered="#{estado == 0}"/>
+                        <h:outputLabel value="Inactivo" rendered="#{estado == 1}"/>
+                    </p:column>
+                    <p:column headerText="Acciones">
+                        <p:commandButton value="Detalle" icon="pi pi-pencil" title="Ver Detalle" oncomplete="showModal();" update=":formDetail">
+                            <f:setPropertyActionListener value="#{emp}" target="#{empleadoManager.emp}"/>
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+                </h:form>   
+            
+            
+            
+            
     </h:body>
 </html>
 

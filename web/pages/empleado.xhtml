@@ -14,8 +14,8 @@
                 App | Empleado
             </ui:define>
             <ui:define name="contenido">
-                <h:form>
-                    <p:dataTable var="emp" value="#{empleadoManager.empList}" rows="10"
+                <h:form id="formTable">
+                    <p:dataTable var="emp" value="#{empleadoManager.empList}" rows="10" id="data"
                          paginator="true"
                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                          currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
@@ -106,44 +106,29 @@
                             <br/><br/>
                             <h:outputText value="Departamento" style="color:white;"/>
                             <br/>
-                            <h:selectOneMenu value="#{empleadoManager.emp.depId.depId}" label="#{empleadoManager.emp.depId.depNombre}"  style="width:312px;text-align: center;
-                                                 padding: 5px;border-radius: 3px;border-color: #ededed;">
-                                <c:forEach var="depL" items="#{departamentoManager.depList}">
-                                    <f:selectItem itemValue="#{depL.depId}" itemLabel="#{depL.depNombre}"  />
-                                </c:forEach>
+                            <h:selectOneMenu value="#{empleadoManager.emp.depId}"  style="width:312px;text-align: center;
+                                             padding: 5px;border-radius: 3px;border-color: #ededed;" converter="depConverter">
+                                <f:selectItems value="#{empleadoManager.depList}" var="dep" itemLabel="#{dep.depNombre}" itemValue="#{dep}" />
                             </h:selectOneMenu>
                             <br/><br/>
                             <h:outputText value="Jefe" style="color:white;"/>
                             <br/>
-                            <h:selectOneMenu value="#{empleadoManager.emp.empJefId.empId}" label="#{empleadoManager.emp.empJefId.empNombres}"  style="width:312px;text-align: center;
+                            <h:selectOneMenu value="#{empleadoManager.emp.empJefId}" style="width:312px;text-align: center;
                                                  padding: 5px;border-radius: 3px;border-color: #ededed;">
-                                <c:forEach var="empL" items="#{empleadoManager.empList}">
-                                    <f:selectItem itemValue="#{empL.empId}" itemLabel="#{empL.empNombres}"  />
-                                </c:forEach>
+                                <f:selectItems value="#{empleadoManager.empList}" var="em" itemLabel="#{em.empNombres}" itemValue="#{em}"/>
                             </h:selectOneMenu>
                             <br/><br/>
                             <h:outputText value="Estado" style="color:white;"/>
                             <br/>
-                            <c:if test="#{empleadoManager.emp.empEstado == 0}">
-                                <h:selectOneMenu value="#{empleadoManager.emp.empEstado}" label="Activo"  style="width:312px;text-align: center;
+                                <h:selectOneMenu value="#{empleadoManager.emp.empEstado}"  style="width:312px;text-align: center;
                                                  padding: 5px;border-radius: 3px;border-color: #ededed;">
                                     <f:selectItem itemValue="0" itemLabel="Activo"/>
                                     <f:selectItem itemValue="1" itemLabel="Inactivo"/>
                                 </h:selectOneMenu>
-                            </c:if>
-                            <c:if test="#{empleadoManager.emp.empEstado == 1}">
-                                <h:selectOneMenu value="#{empleadoManager.emp.empEstado}" label="Inactivo"  style="width:312px;text-align: center;
-                                                 padding: 5px;border-radius: 3px;border-color: #ededed;">
-                                    <f:selectItem itemValue="0" itemLabel="Activo"/>
-                                    <f:selectItem itemValue="1" itemLabel="Inactivo"/>
-                                </h:selectOneMenu>
-                            </c:if>
                             <br/><br/>
-                            <p:commandButton value="Guardar" class="text-center" id="editButton" style="background:#00c1c8;border:none;" actionListener="#{empleadoManager.updateEmp()}">
-                                <f:ajax execute="@form"/>
-                            </p:commandButton>
+                            <p:commandButton value="Guardar" class="text-center" id="editButton" style="background:#00c1c8;border:none;" actionListener="#{empleadoManager.updateEmp()}"/>
                             &nbsp;
-                            <h:commandButton value="Eliminar" class="btn btn-danger" id="deleteButton" type="#{empleadoManager.deleteEmp()}">
+                            <h:commandButton value="Eliminar" class="btn btn-danger" id="deleteButton" actionListener="#{empleadoManager.deleteEmp()}">
                                 <f:ajax execute="@form"/>
                             </h:commandButton>
                         </h:form>

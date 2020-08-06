@@ -13,9 +13,9 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import javax.faces.view.ViewScoped;
 import jpa.controller.RolController;
 import jpa.controller.UsuController;
 import jpa.entity.RhRol;
@@ -104,6 +104,7 @@ public class UsuarioManager implements Serializable{
             usu.setUsId(0);
             String newPass = encrypter.encrypt(usu.getUsContra());
             usu.setUsContra(newPass);
+            usu.setRolId(rol);
             System.out.println("Usuario: " + usu);
             uc.create(usu);
             simpleAlert("success", "Creado", "El registro se ha creado satisfactoriamente.");
@@ -140,6 +141,7 @@ public class UsuarioManager implements Serializable{
     {
         try 
         {
+            usu.setRolId(rol);
             System.out.println("Usuario: " + usu);
             uc.delete(usu);
             simpleAlert("success", "Eliminado", "El registro se ha eliminado satisfactoriamente.");

@@ -12,9 +12,12 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
+import jpa.controller.DepController;
 import jpa.controller.EmpController;
+import jpa.entity.RhDepartamento;
 import jpa.entity.RhEmpleado;
 import org.primefaces.PrimeFaces;
 
@@ -23,7 +26,7 @@ import org.primefaces.PrimeFaces;
  * @author Mauricio Argumedo
  */
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class EmpleadoManager implements Serializable{
     
     private RhEmpleado emp;
@@ -31,6 +34,10 @@ public class EmpleadoManager implements Serializable{
     private EmpController ec;
     
     private List<RhEmpleado> empList;
+    
+    private List<RhDepartamento> depList;
+    
+    
     /**
      * Creates a new instance of EmpleadoManager
      */
@@ -41,7 +48,10 @@ public class EmpleadoManager implements Serializable{
         try 
         {
             emp = new RhEmpleado();
+            
             ec = new EmpController();
+            
+            depList = new DepController().findAll(new RhDepartamento());
             
             empList = ec.findAll(emp);
         } 
@@ -74,6 +84,16 @@ public class EmpleadoManager implements Serializable{
     public void setEmpList(List<RhEmpleado> empList) {
         this.empList = empList;
     }
+
+    public List<RhDepartamento> getDepList() {
+        return depList;
+    }
+
+    public void setDepList(List<RhDepartamento> depList) {
+        this.depList = depList;
+    }
+    
+    
     
     public void createEmp()
     {
