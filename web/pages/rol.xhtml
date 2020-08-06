@@ -5,9 +5,16 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <ui:define name="acciones">
+        <p:commandButton value="Nuevo" class="createButton" style="background:#00c1c8;border:none;" onclick="nuevo();">
+        </p:commandButton>
+    </ui:define>
+    
     <ui:define name="titulo">
         App | Rol
     </ui:define>
+    
     <ui:define name="contenido">
         <h:form id="formTable">
         <p:dataTable var="rol" value="#{rolManager.rolList}" rows="10" id="data"
@@ -22,7 +29,7 @@
                 <h:outputText value="#{rol.rolNombre}"/>
             </p:column>
             <p:column headerText="Acciones">
-                <p:commandButton value="Detalle" icon="pi pi-pencil" title="Ver Detalle" oncomplete="showModal();" update=":formDetail">
+                <p:commandButton value="Detalle" icon="pi pi-pencil" title="Ver Detalle" oncomplete="showModal();prepareToActions();" update=":formDetail">
                     <f:setPropertyActionListener value="#{rol}" target="#{rolManager.rol}"/>
                 </p:commandButton>
             </p:column>
@@ -33,23 +40,27 @@
         <div style="display: none;background: url(../images/header-background.jpg) no-repeat fixed;background-size: cover;" id="animatedModal" class="animated-modal" >
             <h4 class='card-title text-center' style="color:white;">Detalle del Rol&nbsp;<i class="fas fa-user-circle"></i></h4>
             <br/>
-            <div>
+            <div> 
                 <center>
                 <h:form id="formDetail">
                     <h:outputText value="ID"  style="color:white;display: none;"/>
-                    <h:inputText value="#{rolManager.rol.rolId}" style="text-align: center;display: none;" class="form-control"/>
+                    <p:inputText value="#{rolManager.rol.rolId}" style="text-align: center;display: none;" class="form-control"/>
                     
                     <h:outputText value="Nombre" style="color:white;"/>
                     <br/>
                     <p:inputText value="#{rolManager.rol.rolNombre}" style="text-align: center;"/>
                     <br/><br/>
-                    <p:commandButton value="Guardar" class="text-center" id="editButton" style="background:#00c1c8;border:none;" actionListener="#{rolManager.updateRol()}">
+                    <p:commandButton value="Guardar" class="createButton" style="background:#5cb85c;border:none;" actionListener="#{rolManager.createRol()}">
+                        <f:ajax execute="@form"/>
+                    </p:commandButton>
+                    <p:commandButton value="Guardar" class="editButton" style="background:#00c1c8;border:none;" actionListener="#{rolManager.updateRol()}">
                         <f:ajax execute="@form"/>
                     </p:commandButton>
                     &nbsp;
-                    <!--h:commandButton value="Eliminar" class="btn btn-danger" id="deleteButton" actionListener="#{rolManager.deleteRol()}">
+                    <p:commandButton value="Eliminar" class="deleteButton" style="background:#e15073;border:none;" actionListener="#{rolManager.deleteRol()}">
                         <f:ajax execute="@form"/>
-                    </h:commandButton-->
+                    </p:commandButton>
+                    
                 </h:form>
                 </center>
             </div>

@@ -104,6 +104,22 @@
             })
         });
     }
+    
+    let nuevo=()=>{
+        $('.editButton').hide();
+        $('.deleteButton').hide();
+        $('.createButton').show();
+        $('.formDetail')[0].reset();
+        $('formDetail:idValue').val('1');
+        console.log('Se ha reseteado el formulario');
+        showModal();
+    }
+    
+    let prepareToActions=()=>{
+        $('.createButton').hide();
+        $('.editButton').show();
+        $('.deleteButton').show();
+    }
 </script>
 </ui:composition>
 
