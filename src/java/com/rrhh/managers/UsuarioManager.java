@@ -36,6 +36,8 @@ public class UsuarioManager implements Serializable{
     private UsuController uc;
     
     private Encryption encrypter;
+    
+    private RhRol rol;
 
     /**
      * Creates a new instance of usuarioManager
@@ -46,6 +48,8 @@ public class UsuarioManager implements Serializable{
         try 
         {
             usu = new RhUsuario();
+            
+            rol = new RhRol();
             
             uc = new UsuController();
             
@@ -84,6 +88,14 @@ public class UsuarioManager implements Serializable{
     public void setUc(UsuController uc) {
         this.uc = uc;
     }
+
+    public RhRol getRol() {
+        return rol;
+    }
+
+    public void setRol(RhRol rol) {
+        this.rol = rol;
+    }
     
     public void createUsu()
     {
@@ -112,6 +124,7 @@ public class UsuarioManager implements Serializable{
             String newPass = encrypter.encrypt(usu.getUsContra());
             usu.setUsContra(newPass);
             System.out.println("Usuario: " + usu);
+            usu.setRolId(rol);
             uc.edit(usu);
             simpleAlert("success", "Actualizado", "El registro se ha actualizado satisfactoriamente.");
             updateColumns();

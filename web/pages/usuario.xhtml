@@ -45,6 +45,7 @@
                     <p:column headerText="Acciones">
                         <p:commandButton value="Detalle" icon="pi pi-pencil" title="Ver Detalle" oncomplete="showModal();prepareToActions();" update=":formDetail">
                             <f:setPropertyActionListener value="#{usuario}" target="#{usuarioManager.usuario}"/>
+                            <f:setPropertyActionListener value="#{usuario.rolId}" target="#{usuarioManager.rol}"/>
                         </p:commandButton>
                     </p:column>
 
@@ -73,10 +74,18 @@
                                 <br/>
                                 <p:inputText value="#{usuarioManager.usuario.usContra}" style="text-align: center;" size="40"></p:inputText>
                                 <br/><br/>
-                                <h:outputText value="Contraseña" style="color:white;"/>
+                                <h:outputText value="Rol" style="color:white;"/>
                                 <br/>
-                                <p:inputText value="#{usuarioManager.usuario.rolId.rolNombre}" style="text-align: center;" size="40"></p:inputText>
+                                <h:selectOneMenu value="#{usuarioManager.rol.rolId}" label="#{usuarioManager.rol.rolNombre}"  style="width:312px;text-align: center;
+                                                 padding: 5px;border-radius: 3px;border-color: #ededed;">
+                                    <c:forEach var="rolL" items="#{rolManager.rolList}">
+                                        <f:selectItem itemValue="#{rolL.rolId}" itemLabel="#{rolL.rolNombre}"  />
+                                    </c:forEach>
+                                </h:selectOneMenu>
                                 <br/><br/>
+                                
+                                
+                                
                                 <p:commandButton value="Guardar" class="createButton" style="background:#5cb85c;border:none;" actionListener="#{usuarioManager.createUsu()}">
                                     <f:ajax execute="@form"/>
                                 </p:commandButton>

@@ -31,7 +31,7 @@
                             <h:outputText value="#{rol.rolNombre}"/>
                         </p:column>
                         <p:column headerText="Acciones">
-                            <p:commandButton value="Detalle" icon="pi pi-pencil" title="Ver Detalle" oncomplete="showModal();" update=":formDetail">
+                            <p:commandButton value="Detalle" icon="pi pi-pencil" title="Ver Detalle" oncomplete="showModal();prepareToActions();" update=":formDetail">
                                 <f:setPropertyActionListener value="#{rol}" target="#{rolManager.rol}"/>
                             </p:commandButton>
                         </p:column>
