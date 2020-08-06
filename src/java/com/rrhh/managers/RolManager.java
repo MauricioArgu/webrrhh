@@ -161,4 +161,8 @@ public class RolManager implements Serializable {
         alert.append(title).append("','").append(text).append("');");
         PrimeFaces.current().executeScript(alert.toString());
     }
+    
+    public void reset() {
+        PrimeFaces.current().resetInputs("formDetail");
+    }
 }

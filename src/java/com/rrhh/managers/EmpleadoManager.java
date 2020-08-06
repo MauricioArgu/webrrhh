@@ -153,4 +153,9 @@ public class EmpleadoManager implements Serializable{
         PrimeFaces.current().executeScript(alert.toString());
     }
     
+    
+    
+    public void reset() {
+        PrimeFaces.current().resetInputs("formDetail");
+    }
 }
