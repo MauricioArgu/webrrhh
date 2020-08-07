@@ -88,6 +88,18 @@ public class PlanillaManager implements Serializable
         this.objSDF = objSDF;
     }
     
+    public boolean validateMonth()
+    {
+        try 
+        {
+            return pc.validateMonth();
+        } 
+        catch (Exception ex) 
+        {
+            Logger.getLogger(PlanillaManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
     
     
     public void createPla()
