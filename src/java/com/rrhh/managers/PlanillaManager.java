@@ -18,6 +18,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import jpa.controller.PlaController;
 import jpa.entity.RhPlanilla;
+import org.primefaces.PrimeFaces;
 
 /**
  *
@@ -136,5 +137,32 @@ public class PlanillaManager implements Serializable
         }
     }
     
+    public void payPayroll(){
+        try 
+        {
+            pla.setPlnEstado(1);
+            System.out.println("-------------> Planilla: " + pla);
+            pc.edit(pla);
+            simpleAlert("success", "Actualizada", "El estado de la planilla se actualizó satisfactoriamente.");
+            updateColumns();
+        } 
+        catch (Exception ex) 
+        {
+            simpleAlert("info", "No eliminado", ex.getMessage());
+            Logger.getLogger(DetPlanillaManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
+    public void updateColumns() {
+        //reset table state
+        loadData();
+        PrimeFaces.current().ajax().update("formTable:data");
+    }
+    
+    public void simpleAlert(String type, String title, String text){
+        StringBuilder alert = new StringBuilder();
+        alert.append("hideModal();simpleAlert('").append(type).append("','");
+        alert.append(title).append("','").append(text).append("');");
+        PrimeFaces.current().executeScript(alert.toString());
+    }
 }

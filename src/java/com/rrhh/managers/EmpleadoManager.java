@@ -37,6 +37,8 @@ public class EmpleadoManager implements Serializable{
     
     private List<RhDepartamento> depList;
     
+    private List<RhEmpleado> actList;
+    
     private boolean isNew;
     
     
@@ -53,6 +55,7 @@ public class EmpleadoManager implements Serializable{
             ec      = new EmpController();
             depList = new DepController().findAll(new RhDepartamento());
             empList = ec.findAll(emp);
+            actList = ec.findActive(emp);
         } 
         catch (Exception ex) 
         {
@@ -90,6 +93,14 @@ public class EmpleadoManager implements Serializable{
 
     public void setDepList(List<RhDepartamento> depList) {
         this.depList = depList;
+    }
+
+    public List<RhEmpleado> getActList() {
+        return actList;
+    }
+
+    public void setActList(List<RhEmpleado> actList) {
+        this.actList = actList;
     }
     
     

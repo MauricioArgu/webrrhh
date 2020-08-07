@@ -113,11 +113,63 @@
         showModal();
     }
     
+    
+    
     let prepareToActions=()=>{
         $('.createButton').hide();
         $('.editButton').show();
         $('.deleteButton').show();
     }
+    
+    let payAlert=(payrollClass)=>{
+        Swal.fire({
+            icon:'info',
+            title:'¿Seguro que desea pagar?',
+            text:'Después de realizar el pago la planilla no podrá ser alterada de ninguna manera.',
+            confirmButtonColor:'green',
+            confirmButtonText:'Si, pagar planilla',
+            showCancelButton:true,
+            cancelButtonColor:'red',
+            cancelButtonText:'No, cancelar'
+        }).then((result) => {
+            if (result.value) {
+                $('.' + payrollClass).click();
+            }
+        });
+    }
+    
+    let alertInserting=()=>{
+        $('#generatePayroll').hide(300);
+        let timerInterval
+        Swal.fire({
+            title: 'Creando Planilla',
+            html: 'Se están guardando los registros.',
+            timer: 2500,
+            //timerProgressBar: true,
+            onBeforeOpen: () => {
+                Swal.showLoading()
+                timerInterval = setInterval(() => {
+                    const content = Swal.getContent()
+                    if (content) {
+                        const b = content.querySelector('b')
+                        /*if (b) {
+                            b.textContent = Swal.getTimerLeft()
+                        } */  
+                    }
+                }, 100)
+            },
+            onClose: () => {
+                clearInterval(timerInterval)
+            }
+        }).then((result) => {
+            /* Read more about handling dismissals below */
+            if (result.dismiss === Swal.DismissReason.timer) {
+                console.log('I was closed by the timer')
+                simpleAlert('success','Planilla creada','La planilla se ha creado satisfactoriamente');
+            }
+        })
+    }
+    
 </script>
 </ui:composition>
 
