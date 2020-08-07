@@ -5,11 +5,15 @@
  */
 package com.rrhh.managers;
 
-import com.rrhh.entity.User;
+
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import jpa.controller.UsuController;
+import jpa.entity.RhUsuario;
 
 /**
  *
@@ -19,17 +23,19 @@ import javax.faces.bean.ManagedBean;
 @SessionScoped
 public class SessionUser implements Serializable {
 
-    /**
-     * Creates a new instance of SessionUser
-     */
-    private User user;
-
-    public User getUser() {
-        return user;
+    private RhUsuario usuario;
+    private UsuController uc;
+    
+    @PostConstruct
+    public void inicializar()
+    {
+        usuario = new RhUsuario();
+        uc = new UsuController();
     }
-
-    public void setUser(User user) {
-        this.user = user;
+    
+    public void validarUsuario()
+    {
+        
     }
     
 }

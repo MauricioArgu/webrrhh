@@ -32,6 +32,8 @@ public class DetPlanillaManager implements Serializable
     private DetPlaController dpc;
     
     private List<RhDetallePlanilla> detplaList;
+    
+    private List<RhDetallePlanilla> detByIdList;
 
     /**
      * Creates a new instance of DetPlanillaManager
@@ -76,6 +78,35 @@ public class DetPlanillaManager implements Serializable
     public void setDetplaList(List<RhDetallePlanilla> detplaList) {
         this.detplaList = detplaList;
     }
+
+    public List<RhDetallePlanilla> getDetByIdList() {
+        return detByIdList;
+    }
+
+    public void setDetByIdList(List<RhDetallePlanilla> detByIdList) {
+        this.detByIdList = detByIdList;
+    }
+    
+    public void getDetailById(int id)
+    {
+        try 
+        {
+            detByIdList = dpc.findById(id);
+        } catch (Exception ex) {
+            Logger.getLogger(DetPlanillaManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void insertDetails()
+    {
+        for(RhDetallePlanilla det : detByIdList)
+        {
+            detpla = det;
+            createDetPla();
+        }
+        simpleAlert("success", "Creado", "La planilla se ha creado satisfactoriamente.");
+    }
+    
     
     public void createDetPla()
     {
@@ -84,13 +115,11 @@ public class DetPlanillaManager implements Serializable
             detpla.setDetPlnId(0);
             System.out.println("Detalle: " + detpla);
             dpc.create(detpla);
-            simpleAlert("success", "Creado", "El registro se ha creado satisfactoriamente.");
             updateColumns();
         } 
         catch (Exception ex) 
         {
             Logger.getLogger(DetPlanillaManager.class.getName()).log(Level.SEVERE, null, ex);
-            simpleAlert("info", "No creado", ex.getMessage());
         }
     }
     
