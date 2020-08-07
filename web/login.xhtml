@@ -36,13 +36,13 @@
                         <img src="images/rrhh.jpg" alt="IMG" style="border-radius: 8px;" id="logo"/>
                     </div>
 
-                    <h:form class="login100-form validate-form" >
+                    <h:form class="login100-form validate-form first-step" >
                         <span class="login100-form-title">
                             Acceso de usuario
                         </span>
 
                         <div class="wrap-input100 validate-input" data-validate = "Por favor digite su nombre de usuario.">
-                            <p:inputText value="#{sessionUser.sesion.usCorreo}" class="input100" id="txtEmail" placeholder="Correo"/>
+                            <p:inputText value="#{sessionUser.tempSession.usCorreo}" class="input100" id="txtEmail" placeholder="Correo"/>
                                 <span class="focus-input100"></span>
                                 <span class="symbol-input100">
                                     <i class="fa fa-envelope" aria-hidden="true"></i>
@@ -50,18 +50,22 @@
                         </div>
 
                         <div class="wrap-input100 validate-input" data-validate = "Contraseña requerida.">
-                            <p:password value="#{sessionUser.sesion.usContra}" class="input100" placeholder="Contraseña"/>
+                            <p:password value="#{sessionUser.tempSession.usContra}" class="input100" placeholder="Contraseña"/>
                                 <span class="focus-input100"></span>
                                 <span class="symbol-input100">
                                     <i class="fa fa-lock" aria-hidden="true"></i>
                                 </span>
                                 
-                                <script>$('.input100').removeClass('ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all');</script>
+                                
                         </div>
 
                         <div class="container-login100-form-btn">
-                            <p:commandButton class="login100-form-btn" value="Login" id="log" actionListener="#{sessionUser.validarUsuario()}"/>
-                            <script>$('.login100-form-btn').removeClass('ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ');</script>
+                            <p:commandButton class="login100-form-btn btn-first" value="Login" id="log" actionListener="#{sessionUser.validarUsuario()}"/>
+                            <script>$('.login100-form-btn').removeClass('ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ');
+                            $('.btn-first').click(function(){
+                                validateAlert();
+                            });
+                            </script>
                             <!--button class="login100-form-btn">
                                 Login
                             </button-->
@@ -73,6 +77,29 @@
                             </span>
                         </div>
                         <input type="text" name="log" value="true" style="display: none;"/>
+                    </h:form>
+                    
+                    <h:form class="second-step">
+                        
+                        <span class="login100-form-title">
+                            Código de verificación
+                        </span>
+
+                        <div class="wrap-input100 validate-input" data-validate = "Por favor digite su nombre de usuario.">
+                            <p:inputText value="#{sessionUser.userResponse}" class="input100" id="txtEmail" placeholder="Digite el código"/>
+                                <span class="focus-input100"></span>
+                                <span class="symbol-input100">
+                                    <i class="fa fa-code" aria-hidden="true"></i>
+                                </span>
+                                <script>$('.input100').removeClass('ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all');</script>
+                        </div>
+                        <div class="container-login100-form-btn">
+                            <p:commandButton class="login100-form-btn" value="Confirmar" actionListener="#{sessionUser.validarCodigo()}"/>
+                            <script>$('.login100-form-btn').removeClass('ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ');
+                                $('.second-step').hide();
+                            </script>
+                        </div>
+                        
                     </h:form>
                 </div>
             </div>
@@ -123,7 +150,25 @@
                 scale: 1.1
             })
             
-            
+            let validateAlert=()=>{
+                Swal.fire({
+                    type:'info',
+                    title:'Validando usuario',
+                    showConfirmButton:false,
+                    onBeforeOpen: () => {
+                        Swal.showLoading()
+                        timerInterval = setInterval(() => {
+                            const content = Swal.getContent()
+                            if (content) {
+                                const b = content.querySelector('b')
+                                /*if (b) {
+                                    b.textContent = Swal.getTimerLeft()
+                                } */  
+                            }
+                        }, 100)
+                    }
+                });
+            }
         </script>
         <!--===============================================================================================-->
         <script src="js/main.js"></script>

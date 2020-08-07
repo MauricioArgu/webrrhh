@@ -138,7 +138,7 @@
                             </p:column>
                             <p:column headerText="Horas extra nocturnas">
                                 <h:inputText value="#{det.detPlnCantidadHorasNocturnas}"/>
-                            </p:column>
+                            </p:column> 
                             <p:column headerText="Acciones">
                                 <p:commandButton value="Guardar En planilla" icon="pi pi-plus" class="emp-#{det.empId.empId}" title="Guardar" 
                                                 oncomplete="$('.emp-#{det.empId.empId}').hide(300);$('.detailButton').click();">
@@ -146,8 +146,6 @@
                                 </p:commandButton>
                                 
                             </p:column>
-                            
-                            
                         </p:dataTable>
                         <p:commandButton actionListener="#{detPlanillaManager.addDetailToArray()}" class="detailButton" style="display:none;"/>
                     </h:form>
