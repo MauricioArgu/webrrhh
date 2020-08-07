@@ -15,7 +15,8 @@
             
             <ui:define name="acciones">
                 <h:form>
-                    <p:commandButton value="Generar planilla" style="background:#007bff;border:none;"/>
+                    <p:commandButton value="Generar planilla" style="background:#007bff;border:none;" actionListener="#{planillaManager.prepareForCreate()}"/>
+                    <p:commandButton value="Actualizar" style="background:#00c1c8;border:none;" actionListener="#{detPlanillaManager.updateColumns()}"/>
                 </h:form>
             </ui:define>
             
@@ -31,7 +32,7 @@
                             <h:outputText value="#{planillaManager.objSDF.format(planilla.plnFecha)}"/>
                         </p:column>
                         <p:column headerText="Total">
-                            <h:outputText value="$#{planilla.plnTotal}"/>
+                            <h:outputText value="#{detPlanillaManager.nf.format(planilla.plnTotal)}"/>
                         </p:column>
                         <p:column headerText="Estado">
                             <h:outputText value="Pendiente" rendered="#{planilla.plnEstado == 0}"/>
@@ -69,16 +70,16 @@
                                 <h:outputText value="#{detalle.empId.empNombres}"/>
                             </p:column>
                             <p:column headerText="Sueldo Neto">
-                                <h:outputText value="$#{detalle.empId.empSueldo}"/>
+                                <h:outputText value="#{detPlanillaManager.nf.format(detalle.empId.empSueldo)}"/>
                             </p:column>
                             <p:column headerText="Total Descuentos">
-                                <h:outputText value="$#{detalle.detPlnTotalDescuentos}"/>
+                                <h:outputText value="#{detPlanillaManager.nf.format(detalle.detPlnTotalDescuentos)}"/>
                             </p:column>
                             <p:column headerText="Bonos por horas extras">
-                                <h:outputText value="$#{detalle.detPlnBonoHorasExtra}"/>
+                                <h:outputText value="#{detPlanillaManager.nf.format(detalle.detPlnBonoHorasExtra)}"/>
                             </p:column>
                             <p:column headerText="Total a pagar">
-                                <h:outputText value="$#{detalle.detPlnTotal}"/>
+                                <h:outputText value="#{detPlanillaManager.nf.format(detalle.detPlnTotal)}"/>
                             </p:column>
                             <!--p:column headerText="Acciones">
                                 <p:commandButton value="Detalle" icon="pi pi-pencil" title="Ver Detalle" oncomplete="showModal();prepareToActions();" >
@@ -120,9 +121,10 @@
                             
                             
                         </p:dataTable>
-                        <p:commandButton actionListener="#{detPlanillaManager.addDetailToArray()}" class="detailButton"/>
+                        <p:commandButton actionListener="#{detPlanillaManager.addDetailToArray()}" class="detailButton" style="display:none;"/>
                     </h:form>
                 </div>
+                <script>$('#generatePayroll').hide();</script>
             </ui:define>
         </ui:composition>
     </body>

@@ -6,8 +6,12 @@
 package com.rrhh.managers;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -18,6 +22,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import jpa.controller.DetPlaController;
 import jpa.controller.EmpController;
+import jpa.controller.PlaController;
 import jpa.entity.RhDetallePlanilla;
 import jpa.entity.RhEmpleado;
 import jpa.entity.RhPlanilla;
@@ -34,7 +39,10 @@ public class DetPlanillaManager implements Serializable
     private RhDetallePlanilla detpla;
     
     private DetPlaController dpc;
+    
     private EmpController ec;
+    
+    private PlaController pc;
     
     private List<RhDetallePlanilla> detplaList;
     
@@ -46,6 +54,9 @@ public class DetPlanillaManager implements Serializable
     
     private RhPlanilla pla;
     
+    private double detTotal;
+    
+    private NumberFormat nf;
     
     /**
      * Creates a new instance of DetPlanillaManager
@@ -62,13 +73,19 @@ public class DetPlanillaManager implements Serializable
             
             ec          = new EmpController();
             
+            pc          = new PlaController();
+            
+            pla         = new RhPlanilla();
+            
             detplaList  = new ArrayList<RhDetallePlanilla>();
             
             empActive   =  ec.findActive(new RhEmpleado());
             
             detplainsert= new ArrayList<RhDetallePlanilla>();
             
-            System.out.println("Empeados activos" + empActive.size());
+            detTotal    = 0.0;
+            
+            nf = NumberFormat.getCurrencyInstance(Locale.US);
             
             configDetList();
             
@@ -118,6 +135,14 @@ public class DetPlanillaManager implements Serializable
     public void setPla(RhPlanilla pla) {
         this.pla = pla;
     }
+
+    public NumberFormat getNf() {
+        return nf;
+    }
+
+    public void setNf(NumberFormat nf) {
+        this.nf = nf;
+    }
     
     
     
@@ -131,14 +156,35 @@ public class DetPlanillaManager implements Serializable
         }
     }
     
-    public void insertDetails()
+    public void insertDetails(double total)
     {
-        for(RhDetallePlanilla det : detByIdList)
-        {
-            detpla = det;
-            createDetPla();
+        pla.setPlnTotal((double)Math.round(total * 100d) / 100d);
+        pla.setPlnEstado(0);
+        pla.setPlnFecha(new Date());
+        try {
+            pc.create(pla);
+            
+            RhPlanilla nPayroll = new RhPlanilla();
+            
+            nPayroll = pc.getLastPayroll();
+            
+            
+            System.out.println(nPayroll.getPlnId() + " " + nPayroll.getPlnFecha());
+            for(RhDetallePlanilla det : detplainsert)
+            {
+                detpla = det;
+                detpla.setPlnId(nPayroll);
+                System.out.println(nPayroll.getPlnId() + " " + nPayroll.getPlnFecha());
+                createDetPla();
+            }
+            //simpleAlert("success", "Creado", "La planilla se ha creado satisfactoriamente.");
+            
+            PlanillaManager pm = new PlanillaManager();
+            pm.updateColumns();
+            updateColumns();
+        } catch (Exception ex) {
+            Logger.getLogger(DetPlanillaManager.class.getName()).log(Level.SEVERE, null, ex);
         }
-        simpleAlert("success", "Creado", "La planilla se ha creado satisfactoriamente.");
     }
     
     
@@ -202,17 +248,12 @@ public class DetPlanillaManager implements Serializable
     }
     
     public void addDetailToArray(){
-        System.out.println("--------------------------------------------------------------");
-        System.out.println("Diurnas: " + detpla.getDetPlnCantidadHorasDiurnas() + ", nocturnas: " + detpla.getDetPlnCantidadHorasNocturnas() + 
-                ", empleado: " + detpla.getEmpId().getEmpNombres());
-        //-------Calculos de descuentos
-        
         int diurnas = detpla.getDetPlnCantidadHorasDiurnas(), nocturnas = detpla.getDetPlnCantidadHorasNocturnas();//- Cantidad de horas extras
-        Double sueldoI = detpla.getEmpId().getEmpSueldo();//-Sueldo exacto del empelado
-        Double sueldo = 0.0;//-Sueldo neto = sueldoEmpleado + (bonoHorasDiurnas) + (BonoHorasNocturnas);
-        Double bonoDiurnas = 0.0;//- Bono total por horas diurnas
+        Double sueldoI       = detpla.getEmpId().getEmpSueldo();//-Sueldo exacto del empelado
+        Double sueldo        = 0.0;//-Sueldo neto = sueldoEmpleado + (bonoHorasDiurnas) + (BonoHorasNocturnas);
+        Double bonoDiurnas   = 0.0;//- Bono total por horas diurnas
         Double bonoNocturnas = 0.0;///- Bono total por horas nocturnas
-        Double bonoTotal = 0.0;//-Bono total por horas extra
+        Double bonoTotal     = 0.0;//-Bono total por horas extra
         Double sueldoPorHora = 0.0;//-Calculo de sueldo por hora
         //-Bonos por horas extras y sueldo para descuentos
         //-Sueldo por hora
@@ -273,18 +314,45 @@ public class DetPlanillaManager implements Serializable
         //-Total a pagar al empleado
         total = sueldo - tDescuentos;
         
+        NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.US);
+        
+        
+        detpla.setDetPlnBonoHorasExtra((double)Math.round(bonoTotal * 100d) / 100d);
+        detpla.setDetPlnAfp((double)Math.round(afp * 100d) / 100d);
+        detpla.setDetPlnIsss((double)Math.round(isss * 100d) / 100d);
+        detpla.setDetPlnRenta((double)Math.round(renta * 100d) / 100d);
+        detpla.setDetPlnTotalDescuentos((double)Math.round(tDescuentos * 100d) / 100d);
+        detpla.setDetPlnTotal((double)Math.round(total * 100d) / 100d);
+        
+        detTotal += total;
+        
+        System.out.println("\nEmpleado" + detpla.getEmpId().getEmpNombres()
+                + "\nhoras diurnas: $" + detpla.getDetPlnCantidadHorasDiurnas()
+                + "\nhoras nocturnas: $" + detpla.getDetPlnCantidadHorasNocturnas()
+                + "\nbono: $" + detpla.getDetPlnBonoHorasExtra()
+                + "\nafp: $" + detpla.getDetPlnAfp()
+                + "\nisss: $" + detpla.getDetPlnIsss()
+                + "\nrenta: $" + detpla.getDetPlnRenta()
+                + "\ndescuentos: $" + detpla.getDetPlnTotalDescuentos()
+                + "\nsueldo inicial: $" + detpla.getEmpId().getEmpSueldo()
+                + "\nsueldo a pagar: $" + detpla.getDetPlnTotal());
+        
         detplainsert.add(detpla);
         
         if(detplainsert.size() == empActive.size()){
             executeJSFunction("alertInserting()");
+            insertDetails(detTotal);
         }
     }
     
     
     public void updateColumns() {
         //reset table state
+        PlanillaManager pm = new PlanillaManager();
+        pm.loadData();
         loadData();
         PrimeFaces.current().ajax().update("formTable:data");
+        System.out.println("Se ha actualizado todo");
     }
     
     public void simpleAlert(String type, String title, String text){

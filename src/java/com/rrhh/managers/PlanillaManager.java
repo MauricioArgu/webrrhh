@@ -97,8 +97,9 @@ public class PlanillaManager implements Serializable
         catch (Exception ex) 
         {
             Logger.getLogger(PlanillaManager.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
-        return false;
+        
     }
     
     
@@ -149,6 +150,11 @@ public class PlanillaManager implements Serializable
         }
     }
     
+    public void prepareForCreate(){
+        if(validateMonth()){executeJSFunction("$('#generatePayroll').show(300);");}
+        else{simpleAlert("error", "La planilla ya ha sido creata", "Ya existe una planilla para el mes actual, por favor verifique en los datos.");}
+    }
+    
     public void payPayroll(){
         try 
         {
@@ -176,5 +182,9 @@ public class PlanillaManager implements Serializable
         alert.append("hideModal();simpleAlert('").append(type).append("','");
         alert.append(title).append("','").append(text).append("');");
         PrimeFaces.current().executeScript(alert.toString());
+    }
+    
+    public void executeJSFunction(String function){
+        PrimeFaces.current().executeScript(function);
     }
 }
