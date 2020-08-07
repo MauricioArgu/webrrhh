@@ -42,7 +42,7 @@
                         </span>
 
                         <div class="wrap-input100 validate-input" data-validate = "Por favor digite su nombre de usuario.">
-                                <p:inputText class="input100" id="txtEmail" placeholder="Correo"/>
+                            <p:inputText value="#{sessionUser.sesion.usCorreo}" class="input100" id="txtEmail" placeholder="Correo"/>
                                 <span class="focus-input100"></span>
                                 <span class="symbol-input100">
                                     <i class="fa fa-envelope" aria-hidden="true"></i>
@@ -50,7 +50,7 @@
                         </div>
 
                         <div class="wrap-input100 validate-input" data-validate = "Contraseña requerida.">
-                            <p:password class="input100" placeholder="Contraseña"/>
+                            <p:password value="#{sessionUser.sesion.usContra}" class="input100" placeholder="Contraseña"/>
                                 <span class="focus-input100"></span>
                                 <span class="symbol-input100">
                                     <i class="fa fa-lock" aria-hidden="true"></i>
@@ -60,7 +60,7 @@
                         </div>
 
                         <div class="container-login100-form-btn">
-                            <p:button class="login100-form-btn" value="Login" id="log" outcome="pages/rol"/>
+                            <p:commandButton class="login100-form-btn" value="Login" id="log" actionListener="#{sessionUser.validarUsuario()}"/>
                             <script>$('.login100-form-btn').removeClass('ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ');</script>
                             <!--button class="login100-form-btn">
                                 Login

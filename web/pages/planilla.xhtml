@@ -28,6 +28,20 @@
                          currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
                          rowsPerPageTemplate="5,10,15">
                     
+                        <f:facet name="{Exporters}">
+                            <div style="float:right;padding-top: 5px;">
+                                <h:commandLink>
+                                    <p:graphicImage url="./../img/pdf.png" width="28"/>
+                                    <p:dataExporter type="pdf" target="data" fileName="planilla"/>
+                                </h:commandLink>
+
+                                <h:commandLink>
+                                    <p:graphicImage url="./../img/csv.png" width="22"/>
+                                    <p:dataExporter type="csv" target="data" fileName="planilla" />
+                                </h:commandLink>       
+                            </div>
+                        </f:facet>  
+                        
                         <p:column headerText="Fecha">
                             <h:outputText value="#{planillaManager.objSDF.format(planilla.plnFecha)}"/>
                         </p:column>
@@ -66,6 +80,19 @@
                              currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
                              rowsPerPageTemplate="5,10,15">
 
+                            <f:facet name="{Exporters}">
+                                <div style="float:right;padding-top: 5px;">
+                                    <h:commandLink>
+                                        <p:graphicImage url="./../img/pdf.png" width="28"/>
+                                        <p:dataExporter type="pdf" target="detailData" fileName="detalle-planilla"/>
+                                    </h:commandLink>
+
+                                    <h:commandLink>
+                                        <p:graphicImage url="./../img/csv.png" width="22"/>
+                                        <p:dataExporter type="csv" target="detailData" fileName="detalle-planilla" />
+                                    </h:commandLink>       
+                                </div>
+                            </f:facet>
                             <p:column headerText="Empleado">
                                 <h:outputText value="#{detalle.empId.empNombres}"/>
                             </p:column>
@@ -81,6 +108,7 @@
                             <p:column headerText="Total a pagar">
                                 <h:outputText value="#{detPlanillaManager.nf.format(detalle.detPlnTotal)}"/>
                             </p:column>
+                            
                             <!--p:column headerText="Acciones">
                                 <p:commandButton value="Detalle" icon="pi pi-pencil" title="Ver Detalle" oncomplete="showModal();prepareToActions();" >
                                     
@@ -101,7 +129,7 @@
                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
                              currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
                              rowsPerPageTemplate="5,10,15">
-
+                              
                             <p:column headerText="Empleado" class="">
                                 <h:outputText value="#{det.empId.empNombres}"/>
                             </p:column>
