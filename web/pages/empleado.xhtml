@@ -10,6 +10,11 @@
     <body>
 
         <ui:composition template="./../principal.xhtml">
+            
+            <ui:define name="acciones">
+                
+
+            </ui:define>
             <ui:define name="titulo">
                 App | Empleado
             </ui:define>
@@ -17,9 +22,23 @@
                 <h:form id="formTable">
                     <p:dataTable var="emp" value="#{empleadoManager.empList}" rows="10" id="data"
                          paginator="true"
-                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
                          currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
                          rowsPerPageTemplate="5,10,15">
+                    <f:facet name="{Exporters}">
+                        <div style="float:right;padding-top: 5px;">
+                            <h:commandLink>
+                                <p:graphicImage url="./../img/pdf.png" width="28"/>
+                                <p:dataExporter type="pdf" target="data" fileName="empleados"/>
+                            </h:commandLink>
+
+                            <h:commandLink>
+                                <p:graphicImage url="./../img/csv.png" width="22"/>
+                                <p:dataExporter type="csv" target="data" fileName="empleados" />
+                            </h:commandLink>       
+                        </div>
+                    </f:facet>    
+                        
                     <p:column headerText="Código">
                         <h:outputText value="#{emp.empCodigo}"/>
                     </p:column>
