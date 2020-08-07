@@ -37,6 +37,8 @@ public class EmpleadoManager implements Serializable{
     
     private List<RhDepartamento> depList;
     
+    private boolean isNew;
+    
     
     /**
      * Creates a new instance of EmpleadoManager
@@ -47,12 +49,9 @@ public class EmpleadoManager implements Serializable{
     {
         try 
         {
-            emp = new RhEmpleado();
-            
-            ec = new EmpController();
-            
+            emp     = new RhEmpleado();
+            ec      = new EmpController();
             depList = new DepController().findAll(new RhDepartamento());
-            
             empList = ec.findAll(emp);
         } 
         catch (Exception ex) 
@@ -149,9 +148,8 @@ public class EmpleadoManager implements Serializable{
     {
         try 
         {
-            emp = new RhEmpleado();
-            ec = new EmpController();
-            
+            emp     = new RhEmpleado();
+            ec      = new EmpController();
             empList = ec.findActive(emp);
         } 
         catch (Exception ex) 
@@ -176,6 +174,7 @@ public class EmpleadoManager implements Serializable{
     
     
     public void reset() {
-        PrimeFaces.current().resetInputs("formDetail");
+        emp     = new RhEmpleado();
+        isNew   = true;
     }
 }

@@ -6,6 +6,7 @@
 package com.rrhh.managers;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,6 +32,9 @@ public class PlanillaManager implements Serializable
     private PlaController pc;
     
     private List<RhPlanilla> plaList;
+    
+    private String strDateFormat = "dd MMMM yyyy"; // El formato de fecha está especificado  
+    private SimpleDateFormat objSDF; // La cadena de formato de fecha se pasa como un argumento al objeto
     /**
      * Creates a new instance of PlanillaManager
      */
@@ -40,8 +44,10 @@ public class PlanillaManager implements Serializable
     {
         try 
         {
-            pla = new RhPlanilla();
-            pc = new PlaController();
+            
+            objSDF  = new SimpleDateFormat(strDateFormat);
+            pla     = new RhPlanilla();
+            pc      = new PlaController();
             plaList = pc.findAll(pla);
         } catch (Exception ex) 
         {
@@ -72,6 +78,16 @@ public class PlanillaManager implements Serializable
     public void setPlaList(List<RhPlanilla> plaList) {
         this.plaList = plaList;
     }
+
+    public SimpleDateFormat getObjSDF() {
+        return objSDF;
+    }
+
+    public void setObjSDF(SimpleDateFormat objSDF) {
+        this.objSDF = objSDF;
+    }
+    
+    
     
     public void createPla()
     {
@@ -119,4 +135,6 @@ public class PlanillaManager implements Serializable
             Logger.getLogger(PlanillaManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    
 }

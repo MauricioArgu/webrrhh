@@ -187,6 +187,7 @@ public class UsuarioManager implements Serializable{
     public void reset() {
         System.out.println("--------------------------- Form reset");
         usu = new RhUsuario();
+        rol = new RhRol();
         isNew = true;
     }
 }
