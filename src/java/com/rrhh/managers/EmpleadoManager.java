@@ -26,7 +26,7 @@ import org.primefaces.PrimeFaces;
  * @author Mauricio Argumedo
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class EmpleadoManager implements Serializable{
     
     private RhEmpleado emp;
