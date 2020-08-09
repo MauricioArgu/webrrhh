@@ -6,7 +6,10 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <body>
-
+        
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{sessionUser.validateRRHHUser()}"/>
+        </f:metadata>
         <ui:composition template="./../principal.xhtml">
 
             <ui:define name="titulo">

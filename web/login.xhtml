@@ -4,7 +4,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Log in</title>
         <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <!--===============================================================================================-->
@@ -99,7 +99,11 @@
                                 $('.second-step').hide();
                             </script>
                         </div>
-                        
+                        <div class="text-center p-t-12">
+                            <span class="txt1">
+                                Este paso es necesario por seguridad
+                            </span>
+                        </div>
                     </h:form>
                 </div>
             </div>
@@ -149,12 +153,15 @@
             $('.js-tilt').tilt({
                 scale: 1.1
             })
-            
+            let alert;
             let validateAlert=()=>{
-                Swal.fire({
+                alert = Swal.fire({
                     type:'info',
                     title:'Validando usuario',
                     showConfirmButton:false,
+                    closeOnClickOutside: false,
+                    closeOnEsc: false,
+                    allowOutsideClick: false,
                     onBeforeOpen: () => {
                         Swal.showLoading()
                         timerInterval = setInterval(() => {
@@ -168,6 +175,28 @@
                         }, 100)
                     }
                 });
+            }
+            
+            
+            let alertFail=()=>{
+                alert.close();
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 5000,
+                    timerProgressBar: true,
+                    onOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+
+                Toast.fire({
+                    icon: 'warning',
+                    title:'Usuario o contraseña incorrectos.',
+                    text:'Por favor verifique los datos de inicio de sesión, e intente de nuevo.'
+                })
             }
         </script>
         <!--===============================================================================================-->

@@ -10,14 +10,16 @@ import com.rrhh.utility.Email;
 import com.rrhh.utility.Encryption;
 import java.io.IOException;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ComponentSystemEvent;
 import jpa.controller.UsuController;
+import jpa.entity.RhRol;
 import jpa.entity.RhUsuario;
 import org.primefaces.PrimeFaces;
 
@@ -47,8 +49,14 @@ public class SessionUser implements Serializable {
     
     public void validarUsuario()
     {
-        RhUsuario usr = uc.validarUsuario(tempSession.getUsCorreo());   
+        RhUsuario usr = new RhUsuario();
         boolean isNotValidUser = true;
+        try{
+            usr = uc.validarUsuario(tempSession.getUsCorreo());
+        }catch(Exception ex){
+            usr = null;
+        }
+        
         if (usr != null) 
         {
             Email email = new Email();
@@ -58,16 +66,19 @@ public class SessionUser implements Serializable {
             {
                 tempSession.setRolId(usr.getRolId());
                 tempSession.setUsUsuario(usr.getUsUsuario());
+                
+                codigo = email.sendMail(tempSession.getUsCorreo());
+                
                 System.out.println("ENTRO");
-                setCodigo(email.sendMail(tempSession.getUsCorreo()));
                 System.out.println(codigo);
                 isNotValidUser = false;
-                executeJSFunction("$('.first-step').hide(300);$('.second-step').show(400);Swal.clickCancel();");
+                executeJSFunction("$('.first-step').hide(300);$('.second-step').show(400);alert.close();");
             }
         }
         if (isNotValidUser) 
         {
             System.out.println("IS NOT VALID USER");
+            executeJSFunction("alertFail();");
         }
     }
     
@@ -84,14 +95,12 @@ public class SessionUser implements Serializable {
         System.out.println("verificando codigo: " + userResponse);
         System.out.println("Codigo generado: " + codigo);
         System.out.println("Sesion: " + tempSession.getUsCorreo());
+        System.out.println("rol: " + tempSession.getRolId().getRolNombre());
         if(codigo == userResponse){
             session = tempSession;
             System.out.println("Código correcto");
-            try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("pages/empleado.rrhh");
-            } catch (IOException ex) {
-                Logger.getLogger(SessionUser.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            if(session.getRolId().getRolId()==1){sendRedirect("pages/dashboard.rrhh");}
+            else{sendRedirect("pages/dashboard.rrhh");}
         }
         else{simpleAlert("error", "Código incorrecto", "Por favor verifique el código enviado a su correo electrónico.");}
     }
@@ -105,8 +114,6 @@ public class SessionUser implements Serializable {
         this.session = sesion;
     }
     
-    
-
     public UsuController getUc() {
         return uc;
     }
@@ -139,7 +146,42 @@ public class SessionUser implements Serializable {
         this.tempSession = tempSession;
     }
     
+    public void validateRRHHUser(){
+        if(session.getRolId()!=null){
+            System.out.println("session" +session.getRolId().getRolId() );
+            if(session.getRolId().getRolId()!=2){
+                sendRedirect("dashboard.rrhh");
+            }
+        }else{
+            sendRedirect("../login.rrhh");
+        }
+    }
     
+    public void validateAdminUser(){
+        if(session.getRolId() != null){
+            System.out.println("session" +session.getRolId().getRolId());
+            if(session.getRolId().getRolId()!=1){
+                sendRedirect("dashboard.rrhh");
+            }
+        }else{
+            sendRedirect("../login.rrhh");
+        }
+    }
+    
+    public void logOut(){
+        tempSession = new RhUsuario();
+        session     = new RhUsuario();
+        sendRedirect("../login.rrhh");
+    }
+    
+    
+    public void sendRedirect(String url){
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect(url);
+        } catch (IOException ex) {
+            Logger.getLogger(SessionUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     public void simpleAlert(String type, String title, String text){
         StringBuilder alert = new StringBuilder();
