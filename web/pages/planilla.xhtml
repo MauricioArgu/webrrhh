@@ -22,7 +22,7 @@
             <ui:define name="acciones">
                 <h:form>
                     <p:commandButton value="Generar planilla" style="background:#007bff;border:none;" actionListener="#{planillaManager.prepareForCreate()}"/>
-                    <p:commandButton value="Actualizar" style="background:#00c1c8;border:none;" actionListener="#{detPlanillaManager.updateColumns()}"/>
+                    <!--p:commandButton value="Actualizar" style="background:#00c1c8;border:none;" actionListener=""/-->
                 </h:form>
             </ui:define>
             
@@ -65,12 +65,14 @@
                                 <f:setPropertyActionListener value="#{planilla}" target="#{planillaManager.pla}"/>
                             </p:commandButton>
                             <p:commandButton value="Pagar" icon="pi pi-dollar" style="background:#dc3545;border:none;"  rendered="#{planilla.plnEstado == 0}"
-                                             oncomplete="payAlert('#{planilla.plnId}');"/>
+                                             oncomplete="payAlert('pay-#{planilla.plnId}');">
+                                <f:setPropertyActionListener value="#{planilla}" target="#{planillaManager.pla}"/>
+                            </p:commandButton>
                             
                             <p:commandButton value="Pagar" icon="pi pi-dollar" style="background:#dc3545;border:none;display:none;"
                                              actionListener="#{planillaManager.payPayroll()}" rendered="#{planilla.plnEstado == 0}"
-                                             class="#{planilla.plnId}">
-                                <f:setPropertyActionListener value="#{planilla}" target="#{planillaManager.pla}"/>
+                                             class="pay-#{planilla.plnId}">
+                                
                             </p:commandButton>
                         </p:column>
                     </p:dataTable>
