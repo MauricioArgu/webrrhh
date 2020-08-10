@@ -96,13 +96,16 @@ public class SessionUser implements Serializable {
         System.out.println("Codigo generado: " + codigo);
         System.out.println("Sesion: " + tempSession.getUsCorreo());
         System.out.println("rol: " + tempSession.getRolId().getRolNombre());
-        if(codigo == userResponse){
-            session = tempSession;
-            System.out.println("Código correcto");
-            if(session.getRolId().getRolId()==1){sendRedirect("pages/dashboard.rrhh");}
-            else{sendRedirect("pages/dashboard.rrhh");}
+        try{
+            if(codigo == userResponse){
+                session = tempSession;
+                System.out.println("Código correcto");
+                if(session.getRolId().getRolId()==1){sendRedirect("pages/dashboard.rrhh");}
+                else{sendRedirect("pages/dashboard.rrhh");}
+            }else{simpleAlert("info", "Código incorrecto", "Por favor verifique el código enviado a su correo electrónico.");}
+        }catch(Exception ex){
+            simpleAlert("info", "Código incorrecto", "Por favor verifique el código enviado a su correo electrónico.");
         }
-        else{simpleAlert("error", "Código incorrecto", "Por favor verifique el código enviado a su correo electrónico.");}
     }
     
 
@@ -185,7 +188,7 @@ public class SessionUser implements Serializable {
     
     public void simpleAlert(String type, String title, String text){
         StringBuilder alert = new StringBuilder();
-        alert.append("hideModal();simpleAlert('").append(type).append("','");
+        alert.append("simpleAlert('").append(type).append("','");
         alert.append(title).append("','").append(text).append("');");
         PrimeFaces.current().executeScript(alert.toString());
     }

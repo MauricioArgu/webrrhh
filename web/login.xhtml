@@ -110,28 +110,18 @@
         </div>
 
         <div style="display: none;" id="animatedModal" class="animated-modal">
-            <h4 class='card-title'>Bienvenidos a mi URBodega System <em class="fas fa-toolbox"></em></h4>
+            <h4 class='card-title'>Bienvenidos a mi RRHHSystems <em class="fas fa-toolbox"></em></h4>
             <br/>
             <div>
                 <p>
                     <strong>Mantenimiento</strong>
-                    <br/>
-                    Ingreso nuevas herraminetas a la base de datos.
-                    Registro del personal que usa las herramientas.
-                    <br/>
                     <strong>Gestionar</strong>
                     <br/>
-                    Registro de personas que usan herramientas, herraminetas asignadas y usauario del sistema que asigno las herramientas.
+                    Planillas,empelados, usuarios, roles y mucho más.
                     <br/>
                     <strong>Reporteria.</strong>
                     <br/>
-                    Reportes de herraminetas según categoría.
-                    Reporte de herramientas defectuosas.
-                    Reporte de herramientas nuevas.
-                    Reporte de herramientas en uso (prestadas).
-                    Reporte de herramientas disponibles a la hora y fecha.
-                    Reporte de herramientas prestadas por persona.
-                    Debe haber un historial general de préstamos de herramientas.
+                    Puedes generar reportes de las tablas que necesitas.
                 </p>
             </div>
         </div>
@@ -197,6 +187,14 @@
                     title:'Usuario o contraseña incorrectos.',
                     text:'Por favor verifique los datos de inicio de sesión, e intente de nuevo.'
                 })
+            }
+            
+            let simpleAlert=(type,title,text)=>{
+                Swal.fire({
+                    icon:type,
+                    title:title,
+                    text:text
+                });
             }
         </script>
         <!--===============================================================================================-->
