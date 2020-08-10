@@ -22,7 +22,7 @@
             <ui:define name="acciones">
                 <h:form>
                     <p:commandButton value="Generar planilla" style="background:#007bff;border:none;" actionListener="#{planillaManager.prepareForCreate()}"/>
-                    <!--p:commandButton value="Actualizar" style="background:#00c1c8;border:none;" actionListener=""/-->
+                    <p:commandButton value="Actualizar" style="background:#00c1c8;border:none;" actionListener="#{planillaManager.updateColumns()}" update=":data"/>
                 </h:form>
             </ui:define>
             

@@ -45,6 +45,8 @@ public class Email {
             Encryption enc = new Encryption();
             String ed = enc.decrypt(MDATA[0]);
             String md = enc.decrypt(MDATA[1]);
+            
+            System.out.println("" + ed + "," + md);
             String asunto = "Código de verificación.";
             String mensaje = "Código "+rNum;
             Properties props = new Properties();
