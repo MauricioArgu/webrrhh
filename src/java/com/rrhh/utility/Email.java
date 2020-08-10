@@ -23,7 +23,7 @@ import javax.mail.internet.MimeMultipart;
  * @author Mauricio Argumedo
  */
 public class Email {
-    private static final String[] MDATA = {"BxV/e/4IwIerSxs/Hm6PFgSgGNyL8hm7myA30MCYEE0=","EEOzJdKrAdoaoXshuDfoMw=="};
+    private static final String[] MDATA = {"gtUxaevgdODrPeENvngGcHrLVe+WHhXaycXVAsSkO/4=","eRE8jYVJCBF8pjq+DKFEQw=="};
 
     public Email() {
     }
