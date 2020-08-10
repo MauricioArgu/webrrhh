@@ -171,6 +171,12 @@ public class SessionUser implements Serializable {
         }
     }
     
+    public void validateUser(){
+        if(session.getRolId() == null){
+            sendRedirect("../login.rrhh");
+        }
+    }
+    
     public void logOut(){
         tempSession = new RhUsuario();
         session     = new RhUsuario();
