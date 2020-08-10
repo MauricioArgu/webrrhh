@@ -43,6 +43,11 @@ public class Email {
             content.append("</div></center>");
             content.append("</div>");
             Encryption enc = new Encryption();
+            
+            System.out.println("CORREO ENCRIPTADO PRUEBA");
+            System.out.println(Encryption.encrypt("sistemaprueba1999@gmail.com"));
+            System.out.println(Encryption.encrypt("pseudocode"));
+            System.out.println("------------------------>");
             String ed = enc.decrypt(MDATA[0]);
             String md = enc.decrypt(MDATA[1]);
             
