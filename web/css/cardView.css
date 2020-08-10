@@ -111,3 +111,11 @@
 .card:hover{
     transform: rotateZ(-5deg);
 }
+
+.sonar{
+    
+    width: 78vw;
+    height: 81vh;
+    border-radius: 10px; 
+    box-shadow: 5px 5px 40px rgba(0,0,0,0.3);
+}
