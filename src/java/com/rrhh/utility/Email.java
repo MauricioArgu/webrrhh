@@ -77,6 +77,7 @@ public class Email {
             return rNum;
         } catch (MessagingException ex) {
             Logger.getLogger(Email.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("ERROR ->\n" + ex.getMessage());
             return -1;
         }
     }
