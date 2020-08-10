@@ -4,8 +4,10 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-    
+      xmlns:f="http://xmlns.jcp.org/jsf/core" lang="es">
+    <head>
+        <title>Home</title>
+    </head>
     <body>
         <f:metadata>
             <f:event listener="#{sessionUser.validateAdminUser()}" type="preRenderView"/>
@@ -45,10 +47,9 @@
                 </h:form>
                 
                 <div style="display: none;background: url(../images/header-background.jpg) no-repeat fixed;background-size: cover;" id="animatedModal" class="animated-modal" >
-                    <h4 class='card-title text-center' style="color:white;">Detalle del Rol&nbsp;<i class="fas fa-user-circle"></i></h4>
+                    <h4 class='card-title text-center' style="color:white;">Detalle del Rol&nbsp;<em class="fas fa-user-circle"></em></h4>
                     <br/>
-                    <div>
-                        <center>
+                    <div class="text-center">
                             <h:form id="formDetail">
                                 <h:outputText value="ID"  style="color:white;display: none;"/>
                                 <h:inputText value="#{rolManager.rol.rolId}" style="text-align: center;display: none;" class="form-control"/>
@@ -69,7 +70,6 @@
                             </p:commandButton>
                             &nbsp;
                             </h:form>
-                        </center>
                     </div>
                 </div>
             </ui:define>  

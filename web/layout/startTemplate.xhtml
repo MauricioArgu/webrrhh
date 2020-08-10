@@ -20,7 +20,7 @@
                             left: 20px;
                             box-shadow: rgba(0,0,0,0.3) 1px 5px 4px 0px;
                             z-index: 1000" 
-    class="js-tilt"  data-tilt="true"/> 
+    class="js-tilt"  data-tilt="true" alt="Imagen" /> 
     
     <div class="app-header header-shadow" style="background: url(../images/header-background.jpg) no-repeat fixed;background-size: cover;
         background: -webkit-linear-gradient(-135deg, #47A0FF, #00148f);
@@ -29,7 +29,7 @@
         background: linear-gradient(-135deg, #47A0FF, #00148f);">
         <div class="app-header__logo">
             <div class="logo-src">
-                <img src="../images/rrhh.jpg" width="100" alt="" style="margin-left: 20px;margin-top:-15px;border-radius:5px;"/>
+                <img src="../images/rrhh.jpg" width="100" style="margin-left: 20px;margin-top:-15px;border-radius:5px;"  alt="Imagen"/>
             </div>
             <div class="header__pane ml-auto">
                 <div>
@@ -54,21 +54,12 @@
             <span>
                 <button type="button" class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
                     <span class="btn-icon-wrapper">
-                        <i class="fa fa-ellipsis-v fa-w-6"></i>
+                        <em class="fa fa-ellipsis-v fa-w-6"></em>
                     </span>
                 </button>
             </span>
         </div>
         <div class="app-header__content">
-            <!--div class="app-header-left">
-                <div class="search-wrapper">
-                    <div class="input-holder">
-                        <input type="text" class="search-input" placeholder="Type to search"/>
-                        <button class="search-icon"><span></span></button>
-                    </div>
-                    <button class="close"></button>
-                </div>
-            </div-->
             <div class="app-header-right">
 
                 <div class="header-btn-lg pr-0">
@@ -77,8 +68,8 @@
                             <div class="widget-content-left">
                                 <div class="btn-group">
                                     <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
-                                        <img width="42" class="rounded-circle" src="../img/user-icon.png" alt=""/>
-                                        <i class="fa fa-angle-down ml-2 opacity-8" style="color:white;"></i>
+                                        <img width="42" class="rounded-circle" src="../img/user-icon.png"  alt="Imagen"/>
+                                        <em class="fa fa-angle-down ml-2 opacity-8" style="color:white;"></em>
                                     </a>
                                     <div tabindex="-1" role="menu" aria-hidden="true" class="rm-pointers dropdown-menu-lg dropdown-menu dropdown-menu-right">
                                         <div class="dropdown-menu-header">
@@ -90,7 +81,7 @@
                                                             <div class="widget-content-left mr-3">
                                                                 <img width="42" class="rounded-circle"
                                                                      src="../img/user-icon.png"
-                                                                     alt=""/>
+                                                                      alt="Imagen"/>
                                                             </div>
                                                             <div class="widget-content-left">
                                                                 <div class="widget-heading" style="color:white;">User: 
@@ -158,7 +149,7 @@
                     <span>
                         <button type="button" class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
                             <span class="btn-icon-wrapper">
-                                <i class="fa fa-ellipsis-v fa-w-6"></i>
+                                <em class="fa fa-ellipsis-v fa-w-6"></em>
                             </span>
                         </button>
                     </span>
@@ -167,27 +158,27 @@
                     <ul class="vertical-nav-menu">
                         <li class="app-sidebar__heading">Menu</li>
                         <li class="mm-active">
-                                <a href="dashboard.rrhh"><i class="metismenu-icon pe-7s-rocket"></i>
+                                <a href="dashboard.rrhh"><em class="metismenu-icon pe-7s-rocket"></em>
                                Inicio
-                                <i class="metismenu-state-icon  caret-left"></i></a>
+                                <em class="metismenu-state-icon  caret-left"></em></a>
                         </li>
                         <li>
                             <a href="#">
-                                <i class="metismenu-icon pe-7s-browser"></i>
+                                <em class="metismenu-icon pe-7s-browser"></em>
                                 Gestión
-                                <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                <em class="metismenu-state-icon pe-7s-angle-down caret-left"></em>
                             </a>
                             <ul>
                                 <c:if test="#{sessionUser.sesion.rolId.rolId == 1}">
                                     <li>
                                         <a href="rol.rrhh">
-                                            <i class="metismenu-icon"></i>
+                                            <em class="metismenu-icon"></em>
                                             Roles
                                         </a>
                                     </li>
                                     <li>
                                         <a href="usuario.rrhh">
-                                            <i class="metismenu-icon"></i>
+                                            <em class="metismenu-icon"></em>
                                             Usuarios
                                         </a>
                                     </li>
@@ -195,19 +186,19 @@
                                 <c:if test="#{sessionUser.sesion.rolId.rolId == 2}">
                                     <li>
                                         <a href="empleado.rrhh">
-                                            <i class="metismenu-icon"></i>
+                                            <em class="metismenu-icon"></em>
                                             Empleados
                                         </a>
                                     </li>
                                     <li>
                                         <a href="departamento.rrhh">
-                                            <i class="metismenu-icon"></i>
+                                            <em class="metismenu-icon"></em>
                                             Departamentos
                                         </a>
                                     </li>
                                     <li>
                                         <a href="planilla.rrhh">
-                                            <i class="metismenu-icon"></i>
+                                            <em class="metismenu-icon"></em>
                                             Planillas
                                         </a>
                                     </li>
@@ -216,34 +207,6 @@
 								
                             </ul>
                         </li>
-                        <!--li>
-                            <a href="#">
-                                <i class="metismenu-icon pe-7s-plugin"></i>
-                                Applications
-                                <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
-                            </a>
-                            <ul>
-                                <li>
-                                    <a href="apps-videoChat.php">
-                                        <i class="metismenu-icon">
-                                        </i>Video Chat
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="apps-chat.php">
-                                        <i class="metismenu-icon">
-                                        </i>Chat
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-						<li>
-                            <a href="apps-profile.php">
-                                <i class="metismenu-icon pe-7s-user"></i>
-                                Profile
-                            </a>
-                        </li-->
-                        
                     </ul>
                 </div>
             </div>
@@ -263,7 +226,7 @@
                 </ui:insert>
                 
                 <button class="login100-form-btn" data-fancybox="true" data-animation-duration="700" data-src="#animatedModal" href="javascript:;" id="form" style="display:none;">
-                    Más información  <i class="fas fa-user-circle"></i>
+                    Más información  <em class="fas fa-user-circle"></em>
                 </button>
             </div>
         </div>

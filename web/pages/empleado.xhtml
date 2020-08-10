@@ -5,8 +5,10 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-    
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" lang="es">
+    <head>
+        <title>Home</title>
+    </head>
     <body>
         <f:metadata>
             <f:event listener="#{sessionUser.validateRRHHUser()}" type="preRenderView"/>
@@ -14,7 +16,8 @@
         <ui:composition template="./../principal.xhtml">
             
             <ui:define name="acciones">
-                
+                <p:commandButton value="Nuevo" class="createButton" style="background:#00c1c8;border:none;" onclick="nuevo();" update=":formDetail" actionListener="#{empleadoManager.reset()}">
+                </p:commandButton>
 
             </ui:define>
             <ui:define name="titulo">
@@ -86,9 +89,8 @@
                 
                 <!-- FORMULARIO -->
                 <div style="display: none;background: url(../images/header-background.jpg) no-repeat fixed;background-size: cover;" id="animatedModal" class="animated-modal" >
-                    <h4 class='card-title text-center' style="color:white;">Detalle del Empleado&nbsp;<i class="fas fa-user-tag"></i></h4>
-                    <div>
-                        <center>
+                    <h4 class='card-title text-center' style="color:white;">Detalle del Empleado&nbsp;<em class="fas fa-user-tag"></em></h4>
+                    <div class="text-center">
                             <h:form id="formDetail">
                             <h:outputText value="ID"  style="color:white;display: none;"/>
                             <h:inputText value="#{empleadoManager.emp.empId}" style="text-align: center;display: none;" class="form-control"/>
@@ -149,7 +151,6 @@
                             <br/><br/>
                             <p:commandButton value="Guardar" class="text-center" id="editButton" style="background:#00c1c8;border:none;" actionListener="#{empleadoManager.updateEmp()}"/>
                         </h:form>
-                        </center>
                     </div>
                 </div>
                 

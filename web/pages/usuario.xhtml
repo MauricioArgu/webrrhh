@@ -5,8 +5,10 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-    
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" lang="es">
+    <head>
+        <title>Home</title>
+    </head>
     <body>
         <f:metadata>
             <f:event listener="#{sessionUser.validateAdminUser()}" type="preRenderView"/>
@@ -57,46 +59,44 @@
                 </h:form>
                 
                 <div style="display: none;background: url(../images/header-background.jpg) no-repeat fixed;background-size: cover;" id="animatedModal" class="animated-modal" >
-                    <h4 class='card-title text-center' style="color:white;">Detalle del Usuario&nbsp;<i class="fas fa-user-circle"></i></h4>
+                    <h4 class='card-title text-center' style="color:white;">Detalle del Usuario&nbsp;<em class="fas fa-user-circle"></em></h4>
                     <br/>
-                    <div>
-                        <center>
-                            <h:form id="formDetail" class="formDetail">
-                                <h:outputText value="ID"  style="color:white;display: none;"/>
-                                
-                                <p:inputText value="#{usuarioManager.usuario.usId}" style="text-align: center;display: none;" size="40"></p:inputText>
-                                
-                                <h:outputText value="Nombre" style="color:white;"/>
-                                <br/>
-                                <p:inputText value="#{usuarioManager.usuario.usUsuario}" style="text-align: center;" size="40"></p:inputText>
-                                <br/><br/>
-                                <h:outputText value="Correo" style="color:white;"/>
-                                <br/>
-                                <p:inputText value="#{usuarioManager.usuario.usCorreo}" style="text-align: center;" size="40"></p:inputText>
-                                <br/><br/>
-                                <h:outputText value="Contraseña" style="color:white;"/>
-                                <br/>
-                                <p:inputText value="#{usuarioManager.usuario.usContra}" style="text-align: center;" size="40"></p:inputText>
-                                <br/><br/>
-                                <h:outputText value="Rol" style="color:white;"/>
-                                <br/>
-                                <h:selectOneMenu value="#{usuarioManager.rol.rolId}" label="#{usuarioManager.rol.rolNombre}"  style="width:312px;text-align: center;
-                                                 padding: 5px;border-radius: 3px;border-color: #ededed;">
-                                    <c:forEach var="rolL" items="#{rolManager.rolList}">
-                                        <f:selectItem itemValue="#{rolL.rolId}" itemLabel="#{rolL.rolNombre}"  />
-                                    </c:forEach>
-                                </h:selectOneMenu>
-                                <br/><br/>
-                                <p:commandButton value="Guardar" class="createButton" style="background:#5cb85c;border:none;" actionListener="#{usuarioManager.createUsu()}" rendered="#{usuarioManager.isNew}">
-                                    <f:ajax execute="@form"/>
-                                </p:commandButton>
-                                <p:commandButton value="Guardar" class="editButton" style="background:#00c1c8;border:none;" actionListener="#{usuarioManager.updateUsu()}" rendered="#{!usuarioManager.isNew}">
-                                    <f:ajax execute="@form"/>
-                                </p:commandButton>
-                                &nbsp;
-                                <p:commandButton value="Eliminar" class="deleteButton" style="background:#dc3545;border:none;" actionListener="#{usuarioManager.deleteUsu()}" rendered="#{!usuarioManager.isNew}"/>
-                            </h:form>
-                        </center>
+                    <div class="text-center">
+                        <h:form id="formDetail" class="formDetail">
+                            <h:outputText value="ID"  style="color:white;display: none;"/>
+
+                            <p:inputText value="#{usuarioManager.usuario.usId}" style="text-align: center;display: none;" size="40"></p:inputText>
+
+                            <h:outputText value="Nombre" style="color:white;"/>
+                            <br/>
+                            <p:inputText value="#{usuarioManager.usuario.usUsuario}" style="text-align: center;" size="40"></p:inputText>
+                            <br/><br/>
+                            <h:outputText value="Correo" style="color:white;"/>
+                            <br/>
+                            <p:inputText value="#{usuarioManager.usuario.usCorreo}" style="text-align: center;" size="40"></p:inputText>
+                            <br/><br/>
+                            <h:outputText value="Contraseña" style="color:white;"/>
+                            <br/>
+                            <p:inputText value="#{usuarioManager.usuario.usContra}" style="text-align: center;" size="40"></p:inputText>
+                            <br/><br/>
+                            <h:outputText value="Rol" style="color:white;"/>
+                            <br/>
+                            <h:selectOneMenu value="#{usuarioManager.rol.rolId}" label="#{usuarioManager.rol.rolNombre}"  style="width:312px;text-align: center;
+                                             padding: 5px;border-radius: 3px;border-color: #ededed;">
+                                <c:forEach var="rolL" items="#{rolManager.rolList}">
+                                    <f:selectItem itemValue="#{rolL.rolId}" itemLabel="#{rolL.rolNombre}"  />
+                                </c:forEach>
+                            </h:selectOneMenu>
+                            <br/><br/>
+                            <p:commandButton value="Guardar" class="createButton" style="background:#5cb85c;border:none;" actionListener="#{usuarioManager.createUsu()}" rendered="#{usuarioManager.isNew}">
+                                <f:ajax execute="@form"/>
+                            </p:commandButton>
+                            <p:commandButton value="Guardar" class="editButton" style="background:#00c1c8;border:none;" actionListener="#{usuarioManager.updateUsu()}" rendered="#{!usuarioManager.isNew}">
+                                <f:ajax execute="@form"/>
+                            </p:commandButton>
+                            &nbsp;
+                            <p:commandButton value="Eliminar" class="deleteButton" style="background:#dc3545;border:none;" actionListener="#{usuarioManager.deleteUsu()}" rendered="#{!usuarioManager.isNew}"/>
+                        </h:form>
                     </div>
                 </div>
             </ui:define>

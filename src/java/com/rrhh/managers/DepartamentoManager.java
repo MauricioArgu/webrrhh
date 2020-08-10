@@ -33,6 +33,8 @@ public class DepartamentoManager implements Serializable{
     private List<RhDepartamento> depList;
     
     private DepController dc; 
+    
+    private boolean isNew;
 
     /**
      * Creates a new instance of departamentoManager
@@ -78,6 +80,16 @@ public class DepartamentoManager implements Serializable{
     public void setDepList(List<RhDepartamento> depList) {
         this.depList = depList;
     }
+
+    public boolean isIsNew() {
+        return isNew;
+    }
+
+    public void setIsNew(boolean isNew) {
+        this.isNew = isNew;
+    }
+    
+    
     
     public void createDep()
     {
@@ -143,6 +155,7 @@ public class DepartamentoManager implements Serializable{
     }
     
     public void reset() {
-        PrimeFaces.current().resetInputs("formDetail");
+        dep = new RhDepartamento();
+        isNew = true;
     }
 }
